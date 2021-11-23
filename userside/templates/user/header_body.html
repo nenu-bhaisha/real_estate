@@ -1,0 +1,72 @@
+{% block header_body %}
+
+    <ul class="nav-menu">
+
+        <li class="active"><a href="home">Home</a></li>
+
+        <li><a href="#">Property<span class="submenu-indicator"></span></a>
+            <ul class="nav-dropdown nav-submenu">
+                <li><a href="property_type">Rent</a></li>
+                <li><a href="property_type">Sell</a></li>
+            </ul>
+        </li>
+
+        {% if request.session.user_name %}
+            <li><a href="#">User<span class="submenu-indicator"></span></a>
+                <ul class="nav-dropdown nav-submenu">
+                    <li><a href="/user_dashboard">User Dashboard</a></li>
+                    <li><a href="/user_profile">My Profile</a></li>
+                    <li><a href="/user_property">My Property</a></li>
+                    <!-- <li><a href="messages.html">Messages</a></li> -->
+                    <li><a href="/user_bookmark_list">Bookmark Property</a></li>
+                    <!-- <li><a href="submit-property.html">Submit Property</a></li> -->
+                </ul>
+            </li>
+        {% endif %}
+
+        <li class=""><a href="/agent">Agent</a></li>
+
+        <li><a href="#">Pages<span class="submenu-indicator"></span></a>
+            <ul class="nav-dropdown nav-submenu">
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/faq">FAQs</a></li>
+            </ul>
+        </li>
+
+    </ul>
+
+    <ul class="nav-menu nav-menu-social align-to-right">
+        {% if request.session.user_session %}
+
+            <li><h4 class="color--googleplus">Welcome {{ request.session.user_name }}</h4></li>
+            <li>
+                <a href="/logout" class="alio_green">
+                    <i class="fas fa-sign-out-alt mr-1"></i><span class="dn-lg">Sign Out</span>
+                </a>
+            </li>
+
+            <li class="add-listing">
+                <a href="{% url 'submit-property' %}" class="theme-cl">
+                    <i class="fas fa-plus-circle mr-1"></i>Add Property
+                </a>
+            </li>
+
+            <!-- <li class="add-listing">
+                <a href="" class="theme-cl">
+                    <i class="fas mr-1"></i>Add Property
+                </a>
+            </li> -->
+        {% else %}
+
+            <li>
+                <a href="#" class="alio_green" data-toggle="modal" data-target="#login">
+                    <i class="fas fa-sign-in-alt mr-1"></i><span class="dn-lg">Sign In</span>
+                </a>
+            </li>
+
+        {% endif %}
+
+</ul>
+{% endblock header_body %}

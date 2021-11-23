@@ -1,0 +1,154 @@
+{% extends 'user/base.html' %}
+{% block title %}User Profile{% endblock title %}
+{% block body %}
+	
+	<!-- ============================ Page Title Start================================== -->
+		<div class="page-title" style="background:#f4f4f4 url(static/assets/img/slider-5.jpg);" data-overlay="5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						
+						<div class="breadcrumbs-wrap">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item active" aria-current="page">My Profile</li>
+							</ol>
+							<h2 class="breadcrumb-title">My Account & Profile</h2>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ============================ Page Title End ================================== -->
+		
+	<!-- ============================ User Dashboard ================================== -->
+		<section class="gray pt-5 pb-5">
+			<div class="container-fluid">
+							
+				<div class="row">
+					
+					<!-- Start Sidemenu -->
+						{% include 'user/user_sidemenu.html' %}
+					<!-- End Sidemenu -->
+					
+					<div class="col-lg-9 col-md-8 col-sm-12">
+						<div class="dashboard-body">
+						
+							<div class="dashboard-wraper">
+							<form action="{% url 'user-profile' %}" method="post">
+                                            {% csrf_token %}
+								<!-- Basic Information -->
+								<div class="frm_submit_block">	
+									<h4>My Account</h4>
+									<!--error starts message -->
+											{% for msg in messages %}
+											<div class="alert alert-danger alert-custom alert-light-{{msg.tags}} fade show mb-5"
+												 role="alert">
+												<div class="alert-icon"><i class="flaticon-warning"></i></div>
+												<div class="alert-text">{{msg}}</div>
+												<div class="alert-close">
+													<button type="button" class="close ti-close" style="margin-top: -17px ; font-size: medium; color: indianred" data-dismiss="alert"
+															aria-label="Close">
+															<!--<span aria-hidden="true"><i class="ti-close"></i></span>-->
+													</button>
+												</div>
+											</div>
+											{% endfor %}
+											<!--error ends message -->
+
+									<div class="frm_submit_wrap">
+										<div class="form-row">
+
+											<div class="form-group col-md-6">
+												<label>Your Name</label>
+												<input type="text" name="uname" class="form-control" value="{{user.user_name}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Email</label>
+												<input type="email" name="uemail" class="form-control" value="{{user.user_email}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Your Title</label>
+												<input type="text" name="utitle" class="form-control" value="{{user.user_title}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Phone</label>
+												<input type="text" name="ucontact" class="form-control" value="{{user.user_contact}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Address</label>
+												<input type="text" name="uaddress" class="form-control" value="{{user.user_address}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>City</label>
+												<input type="text" name="ucity" class="form-control" value="{{user.user_city}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>State</label>
+												<input type="text" name="ustate" class="form-control" value="{{user.user_state}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Zip</label>
+												<input type="text" name="uzipcode" class="form-control" value="{{user.user_zipcode}}">
+											</div>
+											
+											<div class="form-group col-md-12">
+												<label>About</label>
+												<textarea name="uabout"  class="form-control">{{user.user_about}}</textarea>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+								
+								<div class="frm_submit_block">	
+									<h4>Social Accounts</h4>
+									<div class="frm_submit_wrap">
+										<div class="form-row">
+										
+											<div class="form-group col-md-6">
+												<label>Facebook</label>
+												<input type="text" name="ufacebook" class="form-control" value="{{user.user_facebook}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Twitter</label>
+												<input type="text" name="utwitter" class="form-control" value="{{user.user_twitter}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>Instagram</label>
+												<input type="text" name="uinstagram" class="form-control" value="{{user.user_instagram}}">
+											</div>
+											
+											<div class="form-group col-md-6">
+												<label>LinkedIn</label>
+												<input type="text" name="ulinkedin" class="form-control" value="{{user.user_linkedin}}">
+											</div>
+											
+											<div class="form-group col-lg-12 col-md-12 mt-4">
+												<button class="btn btn-theme btn-lg" type="submit">Save Changes</button>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</form>
+							</div>
+						
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</section>
+	<!-- ============================ User Dashboard End ================================== -->
+
+{% endblock body %}

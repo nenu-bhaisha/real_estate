@@ -1,0 +1,308 @@
+{% extends 'user/base.html' %}
+{% block title %}Single property{% endblock title %}
+{% block body %}
+			
+	<!-- ============================ Hero Banner  Start================================== -->
+	<!-- Gallery Part Start -->
+		<section class="gallery_parts pt-2 pb-2 d-none d-sm-none d-md-none d-lg-none d-xl-block">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-8 col-md-7 col-sm-12 pr-1">
+						<div class="gg_single_part left"><a href="static/assets/img/p-2.png" class="mfp-gallery"><img src="static/assets/img/p-2.png" class="img-fluid mx-auto" alt="" /></a></div>
+					</div>
+					<div class="col-lg-4 col-md-5 col-sm-12 pl-1">
+						<div class="gg_single_part-right min"><a href="static/assets/img/p-5.png" class="mfp-gallery"><img src="static/assets/img/p-5.png" class="img-fluid mx-auto" alt="" /></a></div>
+						<div class="gg_single_part-right min mt-2 mb-2"><a href="static/assets/img/p-3.png" class="mfp-gallery"><img src="static/assets/img/p-3.png" class="img-fluid mx-auto" alt="" /></a></div>
+						<div class="gg_single_part-right min"><a href="static/assets/img/p-4.png" class="mfp-gallery"><img src="static/assets/img/p-4.png" class="img-fluid mx-auto" alt="" /></a></div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+		<div class="featured_slick_gallery gray d-block d-md-block d-lg-block d-xl-none">
+			<div class="featured_slick_gallery-slide">
+				<div class="featured_slick_padd"><a href="static/assets/img/slider-2.jpg" class="mfp-gallery"><img src="static/assets/img/slider-2.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="static/assets/img/slider-3.jpg" class="mfp-gallery"><img src="static/assets/img/slider-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="static/assets/img/slider-4.jpg" class="mfp-gallery"><img src="static/assets/img/slider-4.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="static/assets/img/slider-5.jpg" class="mfp-gallery"><img src="static/assets/img/slider-5.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+			</div>
+		</div>
+	<!-- ============================ Hero Banner End ================================== -->
+	
+	<!-- ============================ Property Detail Start ================================== -->
+		<section class="gray">
+			<div class="container">
+				<div class="row">
+					
+					<!-- property main detail -->
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						
+						<div class="property_info_detail_wrap exlio_wrap mb-4">
+							
+							<div class="property_info_detail_wrap_first">
+								<div class="pr-price-into">
+									<div class="_card_list_flex mb-2">
+										<div class="_card_flex_01">
+											<span class="_list_blickes _netork">6 Network</span>
+											<span class="_list_blickes types">Family</span>
+										</div>
+									</div>
+									<h2>{{property1.property_title}}</h2>
+									<span><i class="lni-map-marker"></i> {{property1.property_address}}, {{property1.property_city}}, {{property1.property_state}}, {{property1.property_zipcode}}</span>
+								</div>
+							</div>
+
+							<div class="property_detail_section">
+								<div class="prt-sect-pric">
+									<ul class="_share_lists light">
+										<li><a href="#"><i class="fa fa-bookmark"></i></a></li>
+										<li><a href="#"><i class="fa fa-share"></i></a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+							<div class="_prtis_list_header">
+								<ul>
+									<li>
+										<div class="content_thumb"><img src="static/assets/img/bed.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property1.property_bedrooms}} Bedrooms</span>
+											<span class="title">Bedrooms</span>
+										</div>
+									</li>
+									<li>
+										<div class="content_thumb"><img src="static/assets/img/bath.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property1.property_bathrooms}} Bahrooms</span>
+											<span class="title">Bathrooms</span>
+										</div>
+									</li>
+									<li>
+										<div class="content_thumb"><img src="static/assets/img/area.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property1.property_sqft_area}} Sq Ft</span>
+											<span class="title">Area</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="_prtis_list_body">
+								<ul class="deatil_features">
+
+									<li><strong>{{property1.property_type}}</strong>Property Type</li>
+									<li><strong>Active</strong>Status</li>
+									<li><strong>Central A/C</strong>Cooling</li>
+									<li><strong>Forced Air</strong>Heating Type</li>
+									<li><strong>Kitchen Facilities</strong>Kitchen Features</li>
+									<li><strong>Brick</strong>Exterior Finish</li>
+									<li><strong>Yes</strong>Swimming Pool</li>
+									<li><strong>Yes</strong>Elevetor</li>
+									<li><strong>No</strong>Fireplace</li>
+									<li><strong>No</strong>Free WiFi</li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">About <span class="theme-cl">Property</span></h4>
+							</div>
+							<div class="_prtis_list_body">
+								<p>{{property1.property_description}}</p>
+							</div>
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">Advance <span class="theme-cl">Features</span></h4>
+							</div>
+
+							<div class="_prtis_list_body">
+								<ul class="row p-0 m-0">
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-bed mr-1"></i>{{property1.property_bedrooms}} Bedrooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-bath mr-1"></i>{{property1.property_bathrooms}} Bathrooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-expand-arrows-alt mr-1"></i>{{property1.property_sqft_area}} sqft</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-house-damage mr-1"></i>1 Living Rooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-building mr-1"></i>Build 2007</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-utensils mr-1"></i>2 Kitchens </li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-car mr-1"></i>Car Parking</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-briefcase-medical mr-1"></i>Free Medical</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-fire mr-1"></i>Fireplace</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-layer-group mr-1"></i>Residential</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-tv mr-1"></i>TV Cable</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-spa mr-1"></i>Free Spa</li>
+								</ul>
+							</div>
+							
+						</div>
+						
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+							
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">All <span class="theme-cl">Ameneties</span></h4>
+							</div>
+							
+							<div class="_prtis_list_body">
+								<ul class="avl-features third">
+									<li class="active">Air Conditioning</li>
+									<li class="active">Swimming Pool</li>
+									<li class="active">Central Heating</li>
+									<li class="active">Laundry Room</li>
+									<li class="active">Gym</li>
+									<li class="active">Alarm</li>
+									<li class="active">Window Covering</li>
+									<li class="active">Internet</li>
+									<li class="active">Pets Allow</li>
+									<li class="active">Free WiFi</li>
+									<li>Car Parking</li>
+									<li>Spa & Massage</li>
+								</ul>
+							</div>
+							
+						</div>
+						
+						
+						<!-- Single Reviews Block -->	
+						<div class="_prtis_list mb-4">
+						
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">12 Reviews <span class="theme-cl">Given</span></h4>
+							</div>
+						
+							<div class="_prtis_list_body">
+								<div class="rating-overview">
+									<div class="rating-overview-box">
+										<span class="rating-overview-box-total">4.8</span>
+										<span class="rating-overview-box-percent">out of 5.0</span>
+										<div class="star-rating" data-rating="5"><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star-half filled"></i>
+										</div>
+									</div>
+
+									<div class="rating-bars">
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Property</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating high" data-rating="4.7">
+													<span class="rating-bars-rating-inner" style="width: 85%;"></span>
+												</span>
+												<strong>4.7</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Value for Money</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating good" data-rating="3.9">
+													<span class="rating-bars-rating-inner" style="width: 75%;"></span>
+												</span>
+												<strong>3.9</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Location</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating mid" data-rating="6.2">
+													<span class="rating-bars-rating-inner" style="width: 65.2%;"></span>
+												</span>
+												<strong>6.2</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Agent Support</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating high" data-rating="7.0">
+													<span class="rating-bars-rating-inner" style="width:70%;"></span>
+												</span>
+												<strong>7.0</strong>
+											</span>
+										</div>
+									</div>
+								</div>
+						
+								<div class="author-review">
+									<div class="comment-list">
+										<ul>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-4.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Asiro HD. Mahrakjio</h4>
+																<div class="comment-date">17th Aug 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-5.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Adam H. Vilson</h4>
+																<div class="comment-date">07th June 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-6.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Shaurya Singh Preet</h4>
+																<div class="comment-date">10th June 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<a href="#" class="reviews-checked">12 More Reviews</a>
+							</div>
+							
+						</div>
+						
+
+						
+					</div>
+					
+
+					
+				</div>
+			</div>
+		</section>
+	<!-- ============================ Property Detail End ================================== -->
+			
+{% endblock body %}	

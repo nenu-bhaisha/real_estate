@@ -1,0 +1,461 @@
+{% extends 'user/base.html' %}
+{% block title %} Property Details {% endblock title %}
+{% block body %}
+	<!-- ============================ Hero Banner  Start================================== -->
+	<!-- Gallery Part Start -->
+		<section class="gallery_parts pt-2 pb-2 d-none d-sm-none d-md-none d-lg-none d-xl-block">
+			<div class="container">
+				<div class="row align-items-center">
+					<div class="col-lg-8 col-md-7 col-sm-12 pr-1">
+						<div class="gg_single_part left"><a href="/static/assets/img/p-2.png" class="mfp-gallery"><img src="static/assets/img/p-2.png" class="img-fluid mx-auto" alt="" /></a></div>
+					</div>
+					<div class="col-lg-4 col-md-5 col-sm-12 pl-1">
+						<div class="gg_single_part-right min"><a href="/static/assets/img/p-5.png" class="mfp-gallery"><img src="static/assets/img/p-5.png" class="img-fluid mx-auto" alt="" /></a></div>
+						<div class="gg_single_part-right min mt-2 mb-2"><a href="static/assets/img/p-3.png" class="mfp-gallery"><img src="static/assets/img/p-3.png" class="img-fluid mx-auto" alt="" /></a></div>
+						<div class="gg_single_part-right min"><a href="/static/assets/img/p-4.png" class="mfp-gallery"><img src="static/assets/img/p-4.png" class="img-fluid mx-auto" alt="" /></a></div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="featured_slick_gallery gray d-block d-md-block d-lg-block d-xl-none">
+			<div class="featured_slick_gallery-slide">
+				<div class="featured_slick_padd"><a href="./../../static/assets/img/slider-3.jpg" class="mfp-gallery"><img src="./../../static/assets/img/slider-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-4.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-5.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+
+			</div>
+		</div>
+	<!-- ============================ Hero Banner End ================================== -->
+
+	<!-- ============================ Property Detail Start ================================== -->
+		<section class="gray">
+			<div class="container">
+				<div class="row">
+
+					<!-- property main detail -->
+					<div class="col-lg-8 col-md-12 col-sm-12">
+
+						<div class="property_info_detail_wrap exlio_wrap mb-4">
+
+							<div class="property_info_detail_wrap_first">
+								<div class="pr-price-into">
+									<div class="_card_list_flex mb-2">
+										<div class="_card_flex_01">
+											<span class="_list_blickes _netork">6 Network</span>
+											<span class="_list_blickes types">Family</span>
+										</div>
+									</div>
+									<h2>{{property_details.property_title}}</h2>
+									<span><i class="lni-map-marker"></i> {{property_details.property_address}}, {{property_details.property_city}}, {{property_details.property_state}}, {{property_details.property_zipcode}}</span>
+								</div>
+							</div>
+
+							<div class="property_detail_section">
+								<div class="prt-sect-pric">
+									<ul class="_share_lists light">
+										<li><a href="#"><i class="fa fa-bookmark"></i></a></li>
+										<li><a href="#"><i class="fa fa-share"></i></a></li>
+									</ul>
+								</div>
+							</div>
+
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+							<div class="_prtis_list_header">
+								<ul>
+									<li>
+										<div class="content_thumb"><img src="/static/assets/img/bed.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property_details.property_bedrooms}}</span>
+											<span class="title">Bedrooms</span>
+										</div>
+									</li>
+									<li>
+										<div class="content_thumb"><img src="/static/assets/img/bath.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property_details.property_bathrooms}}</span>
+											<span class="title">Bathrooms</span>
+										</div>
+									</li>
+									<li>
+										<div class="content_thumb"><img src="/static/assets/img/area.svg" alt="" /></div>
+										<div class="content">
+											<span class="dark">{{property_details.property_sqft_area}} Sq Ft</span>
+											<span class="title">Area</span>
+										</div>
+									</li>
+								</ul>
+							</div>
+							<div class="_prtis_list_body">
+								<ul class="deatil_features">
+									<li><strong>2</strong>Garage</li>
+									<li><strong>{{property_details.property_type}}</strong> Property Type</li>
+									<li><strong>1982</strong>Year Built</li>
+									<li><strong>Active</strong>Status</li>
+									<li><strong>Central A/C</strong>Cooling</li>
+									<li><strong>Forced Air</strong>Heating Type</li>
+									<li><strong>Kitchen Facilities</strong>Kitchen Features</li>
+									<li><strong>Brick</strong>Exterior Finish</li>
+									<li><strong>Yes</strong>Swimming Pool</li>
+									<li><strong>Yes</strong>Elevetor</li>
+									<li><strong>No</strong>Fireplace</li>
+									<li><strong>No</strong>Free WiFi</li>
+								</ul>
+							</div>
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">About <span class="theme-cl">Property</span></h4>
+							</div>
+							<div class="_prtis_list_body">
+								<p>{{property_details.property_description}}</p>
+							</div>
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">Advance <span class="theme-cl">Features</span></h4>
+							</div>
+
+							<div class="_prtis_list_body">
+								<ul class="row p-0 m-0">
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-bed mr-1"></i>{{property_details.property_bedrooms}} Bedrooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-bath mr-1"></i>{{property_details.property_bathrooms}} Bathrooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-expand-arrows-alt mr-1"></i>{{property_details.property_sqft_area}} sqft</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-house-damage mr-1"></i>1 Living Rooms</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-building mr-1"></i>Build 2007</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-utensils mr-1"></i>2 Kitchens </li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-car mr-1"></i>Car Parking</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-briefcase-medical mr-1"></i>Free Medical</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-fire mr-1"></i>Fireplace</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-layer-group mr-1"></i>Residential</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-tv mr-1"></i>TV Cable</li>
+									<li class="col-lg-4 col-md-6 mb-2 p-0"><i class="fa fa-spa mr-1"></i>Free Spa</li>
+								</ul>
+							</div>
+
+						</div>
+
+						<!-- Single Block Wrap -->
+						<div class="_prtis_list mb-4">
+
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">All <span class="theme-cl">Ameneties</span></h4>
+							</div>
+
+							<div class="_prtis_list_body">
+								<ul class="avl-features third">
+								{% for p in p_others %}
+									<li class="active">{{p.property_others}}</li>
+								{% endfor %}
+								</ul>
+							</div>
+
+						</div>
+
+
+						<!-- Single Reviews Block -->
+						<div class="_prtis_list mb-4">
+
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">12 Reviews <span class="theme-cl">Given</span></h4>
+							</div>
+
+							<div class="_prtis_list_body">
+								<div class="rating-overview">
+									<div class="rating-overview-box">
+										<span class="rating-overview-box-total">4.8</span>
+										<span class="rating-overview-box-percent">out of 5.0</span>
+										<div class="star-rating" data-rating="5"><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star filled"></i><i class="fa fa-star-half filled"></i>
+										</div>
+									</div>
+
+									<div class="rating-bars">
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Property</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating high" data-rating="4.7">
+													<span class="rating-bars-rating-inner" style="width: 85%;"></span>
+												</span>
+												<strong>4.7</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Value for Money</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating good" data-rating="3.9">
+													<span class="rating-bars-rating-inner" style="width: 75%;"></span>
+												</span>
+												<strong>3.9</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Location</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating mid" data-rating="6.2">
+													<span class="rating-bars-rating-inner" style="width: 65.2%;"></span>
+												</span>
+												<strong>6.2</strong>
+											</span>
+										</div>
+										<div class="rating-bars-item">
+											<span class="rating-bars-name">Agent Support</span>
+											<span class="rating-bars-inner">
+												<span class="rating-bars-rating high" data-rating="7.0">
+													<span class="rating-bars-rating-inner" style="width:70%;"></span>
+												</span>
+												<strong>7.0</strong>
+											</span>
+										</div>
+									</div>
+								</div>
+
+								<div class="author-review">
+									<div class="comment-list">
+										<ul>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-4.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Asiro HD. Mahrakjio</h4>
+																<div class="comment-date">17th Aug 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-5.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Adam H. Vilson</h4>
+																<div class="comment-date">07th June 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+											<li class="article_comments_wrap">
+												<article>
+													<div class="article_comments_thumb">
+														<img src="static/assets/img/team-6.jpg" alt="">
+													</div>
+													<div class="comment-details">
+														<div class="comment-meta">
+															<div class="comment-left-meta">
+																<h4 class="author-name">Shaurya Singh Preet</h4>
+																<div class="comment-date">10th June 2021</div>
+															</div>
+														</div>
+														<div class="comment-text">
+															<p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim laborumab.
+																perspiciatis unde omnis iste natus error.</p>
+														</div>
+													</div>
+												</article>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<a href="#" class="reviews-checked">12 More Reviews</a>
+							</div>
+
+						</div>
+
+						<!-- Single Write a Review -->
+						<div class="_prtis_list mb-4">
+
+							<div class="_prtis_list_header min">
+								<h4 class="m-0">Write a <span class="theme-cl">Review</span></h4>
+							</div>
+						<form id="review_form">
+							<div class="_prtis_list_body">
+								<div class="row">
+
+									<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="form-group">
+											<label>Name</label>
+											<input type="text" class="form-control" name="name" id="name" />
+										</div>
+									</div>
+
+									<div class="col-lg-6 col-md-6 col-sm-12">
+										<div class="form-group">
+											<label>Email ID</label>
+											<input type="email" class="form-control"name="email" id="email" />
+										</div>
+									</div>
+
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="form-group">
+											<label>Messages</label>
+											<textarea class="form-control ht-80"name="message" id="message" ></textarea>
+										</div>
+									</div>
+
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="form-group">
+											<button class="btn theme-bg rounded" type="submit">Submit Review</button>
+										</div>
+									</div>
+
+								</div>
+							</div>
+							</form>
+						</div>
+
+					</div>
+
+					<!-- property Sidebar -->
+					<div class="col-lg-4 col-md-12 col-sm-12">
+						<div class="property-sidebar side_stiky">
+
+							<div class="sider_blocks_wrap shadows">
+								<div class="sidetab-content">
+									<div class="tab-content" id="pillss-tabContent">
+										<!-- Book Now Tab -->
+										<div class="tab-pane fade show active" id="pills-book" role="tabpanel" aria-labelledby="pills-book-tab">
+											<div class="side-booking-body">
+												<div class="row">
+
+													<div class="side-booking-foot">
+														<span class="sb-header-left">Total Payment</span>
+														<h3 class="price theme-cl">${{property_details.property_price}}</h3>
+													</div>
+
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="stbooking-footer mt-1">
+															<div class="form-group mb-0 pb-0">
+																<a href="#" class="btn book_btn theme-bg">Book It Now</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<!-- Appointment Now Tab -->
+										<div class="tab-pane fade" id="pills-appointment" role="tabpanel" aria-labelledby="pills-appointment-tab">
+											<div class="sider-block-body p-3">
+												<div class="row">
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="form-group">
+															<label>Full Name</label>
+															<input type="text" class="form-control light" placeholder="Enter Name">
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="form-group">
+															<label>Email ID</label>
+															<input type="text" class="form-control light" placeholder="Enter eMail ID">
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="form-group">
+															<label>Contact Number</label>
+															<input type="text" class="form-control light" placeholder="Enter Phone No.">
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="form-group">
+															<label>Message</label>
+															<textarea class="form-control light" placeholder="Explain Query"></textarea>
+														</div>
+													</div>
+													<div class="col-lg-12 col-md-12 col-sm-12">
+														<div class="form-group">
+															<button class="btn book_btn theme-bg">Make Appointment</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+							<!-- Agent Detail -->
+								<div class="sider_blocks_wrap">
+									<div class="side-booking-body">
+										<div class="agent-_blocks_title">
+
+											<div class="agent-_blocks_thumb"><img src="/static/assets/img/user-6.jpg" alt=""></div>
+											<div class="agent-_blocks_caption">
+												<h4><a href="#">{{property_details.property_user_id}}</a></h4>
+												<span class="approved-agent"><i class="ti-check"></i>approved</span>
+											</div>
+											<div class="clearfix"></div>
+										</div>
+
+										<a href="#" class="agent-btn-contact" data-toggle="modal" data-target="#autho-message"><i class="ti-comment-alt"></i>Message</a>
+
+										<span id="number" data-last="+1234567896">
+											<span><i class="ti-headphone-alt"></i><a class="see">+355(44)35...Show</a></span>
+										</span>
+									</div>
+								</div>
+
+							<!-- Similar Property -->
+								<div class="sidebar-widgets">
+
+									<h4>Similar Property</h4>
+
+									<div class="sidebar_featured_property">
+
+										<!-- List Sibar Property -->
+										{%for p in property_photo%}
+										<div class="sides_list_property">
+											<div class="sides_list_property_thumb">
+												<img src="{{p.property_image_url.url}}" class="img-fluid" alt="" />
+											</div>
+											<div class="sides_list_property_detail">
+												<h4><a href="single-property-1.html">Loss vengel New Apartment</a></h4>
+												<span><i class="ti-location-pin"></i>Sans Fransico</span>
+												<div class="lists_property_price">
+													<div class="lists_property_types">
+														<div class="property_types_vlix sale">For Sale</div>
+													</div>
+													<div class="lists_property_price_value">
+														<h4>$4,240</h4>
+													</div>
+												</div>
+											</div>
+										</div>
+										{%endfor%}
+
+									</div>
+
+								</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</section>
+	<!-- ============================ Property Detail End ================================== -->
+{% endblock body %}

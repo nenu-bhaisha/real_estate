@@ -1,0 +1,207 @@
+{% extends 'user/base.html' %}
+{% block title %}User Property{% endblock title %}
+{% block body %}
+			
+	<!-- ============================ Page Title Start================================== -->
+		<div class="page-title" style="background:#f4f4f4 url(static/assets/img/slider-5.jpg);" data-overlay="5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						
+						<div class="breadcrumbs-wrap">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item active" aria-current="page">My Properties</li>
+							</ol>
+							<h2 class="breadcrumb-title">My All Properties</h2>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ============================ Page Title End ================================== -->
+	
+	<!-- ============================ User Dashboard ================================== -->
+		<section class="gray pt-5 pb-5">
+			<div class="container-fluid">
+							
+				<div class="row">
+					
+					<!-- Start Sidemenu -->
+						{% include 'user/user_sidemenu.html' %}
+					<!-- End Sidemenu -->
+					
+					<div class="col-lg-9 col-md-8 col-sm-12">
+						<div class="dashboard-body">
+						
+							<div class="row">
+								<div class="col-lg-12 col-md-12">
+									<div class="_prt_filt_dash">
+										<div class="_prt_filt_dash_flex">
+											<div class="foot-news-last">
+												<div class="input-group">
+													<input type="text" class="form-control" placeholder="Search Property">
+													<div class="input-group-append">
+														<span type="button" class="input-group-text theme-bg b-0 text-light"><i class="fas fa-search"></i></span>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="_prt_filt_dash_last m2_hide">
+											<div class="_prt_filt_radius">
+												
+											</div>
+											<div class="_prt_filt_add_new">
+												<a href="submit_property" class="prt_submit_link"><i class="fas fa-plus-circle"></i><span class="d-none d-lg-block d-md-block">List New Property</span></a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-12 col-md-12">
+									<div class="dashboard_property">
+										<div class="table-responsive">
+											<table class="table">
+												<thead class="thead-dark">
+													<tr>
+														<th scope="col">Property</th>
+														<th scope="col">Price</th>
+														<th scope="col">Status</th>
+														<th scope="col">Type</th>
+														<th scope="col" class="m2_hide">Posted On</th>
+														<th scope="col">Published</th>
+														<th scope="col"><center>Action</center></th>
+													</tr>
+												</thead>
+												<tbody>
+												{% for property in property_info  %}
+													<!-- tr block -->
+													<tr>
+														<td>
+															<div class="dash_prt_wrap">
+																<div class="dash_prt_thumb">
+																	<img src="static/assets/img/p-1.png" class="img-fluid" alt="" />
+																</div>
+																<div class="dash_prt_caption">
+																	<h5>{{property.property_title}}</h5>
+																	<div class="prt_dashb_lot">{{property.property_address}},</div>
+																	<div class="prt_dashb_lot">{{property.property_city}}, {{property.property_state}}</div>
+																	<div class="prt_dashb_lot">{{property.property_zipcode}}</div>
+																</div>
+															</div>
+														</td>
+														<td>
+															<div class="prt_dash_rate"><span>Rs. {{property.property_price}}</span></div>
+														</td>
+														<td >
+															{% if property.property_status == 'for_rent' %} <div style="color:#808000;"><b><span>Rent</span></b></div> {% endif %}
+															{% if property.property_status == 'for_sale' %} <div style="color:red;"><b><span>Sale</span></b></div> {% endif %}
+														</td>
+														<td class="m2_hide">
+															<div class="_leads_view"><h5 class="up">{{property.property_type}}</h5></div>
+															<!--<div class="_leads_view_title"><span>Total Views</span></div>-->
+														</td>
+														<td class="m2_hide">
+															<div class="_leads_posted"><h5>{{property.property_added_date}}</h5></div>
+															<!--<div class="_leads_view_title"><span>16 Days ago</span></div>-->
+														</td>
+														<td>
+
+															{% if property_sold %}
+																{%for i in property_sold %}
+																	<div>{% if i.property_rented_sold_property_id.property_id == property.property_id %} <div class="_leads_status"><span class="expire">Sold</span></div>{% endif %}</div>
+																	{% if property.property_is_publish == 1 and i.property_rented_sold_property_id.property_id != property.property_id %} <div style="color:#808000;"><b><span>Published</span></b></div>
+																	{% elif property.property_is_publish == 0 %} <div style="color:red;"><b><span>Not Published</span></b></div> {% endif %}
+																{% endfor %}
+															{% else %}
+																<div>No data</div>
+															{% endif %}
+															<!--<div class="_leads_status"><span class="active">Active</span></div>-->
+															<!--<div class="_leads_view_title"><span>Till 12 Oct</span></div>-->
+														</td>
+														<td>
+															<div class="_leads_action"><center>
+																<a href="{% url 'view_property' property_id=property.property_id %}"><i class="fas fa-eye" style="color:blue"></i></a>
+																{% for i in property_sold %}
+																{% if i.property_rented_sold_property_id.property_id != property.property_id %}
+																	<a href="{% url 'edit_property' property_id=property.property_id %}"><i class="fas fa-edit" style="color:green"></i></a>
+																	<a href="{% url 'delete_property' property_id=property.property_id %}" style="color:red" ><i class="fas fa-trash"></i></a>
+																	{% endif %}
+																{% endfor %}
+
+																</center>
+																<!--<a href="#"><i class="fas fa-trash"></i></a>-->
+															</div>
+														</td>
+													</tr>
+													{% endfor %}
+													<!-- tr block -->
+													<!--
+													<tr>
+														<td>
+															<div class="dash_prt_wrap">
+																<div class="dash_prt_thumb">
+																	<img src="static/assets/img/p-2.png" class="img-fluid" alt="" />
+																</div>
+																<div class="dash_prt_caption">
+																	<h5>4 Bhk Luxury Villa</h5>
+																	<div class="prt_dashb_lot">5682 Brown River Suit 18</div>
+																	<div class="prt_dash_rate"><span>$ 2,200,000</span></div>
+																</div>
+															</div>
+														</td>
+														<td class="m2_hide">
+															<div class="prt_leads"><span>27 till now</span></div>
+															<div class="prt_leads_list">
+																<ul>
+																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
+																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
+																	<li><a href="#" class="_leads_name style-1">K</a></li>
+																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
+																	<li><a href="#" class="leades_more">10+</a></li>
+																</ul>
+															</div>
+														</td>
+														<td class="m2_hide">
+															<div class="_leads_view"><h5 class="up">816</h5></div>
+															<div class="_leads_view_title"><span>Total Views</span></div>
+														</td>
+														<td class="m2_hide">
+															<div class="_leads_posted"><h5>16 Aug - 12:40</h5></div>
+															<div class="_leads_view_title"><span>16 Days ago</span></div>
+														</td>
+														<td>
+															<div class="_leads_status"><span class="expire">Expired</span></div>
+															<div class="_leads_view_title"><span>Till 12 Oct</span></div>
+														</td>
+														<td>
+															<div class="_leads_action">
+																<a href="#"><i class="fas fa-edit"></i></a>
+																<a href="#"><i class="fas fa-trash"></i></a>
+															</div>
+														</td>
+													</tr>
+													-->
+													<!-- tr block -->
+
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- row -->
+						
+							
+						</div>
+							
+					</div>
+					
+				</div>
+			</div>
+		</section>
+	<!-- ============================ User Dashboard End ================================== -->
+
+{% endblock body %}		

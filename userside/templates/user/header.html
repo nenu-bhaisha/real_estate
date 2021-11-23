@@ -1,0 +1,32 @@
+{% block header %}
+    <!-- ============================ Top header ================================== -->
+
+    <!-- Start Navigation -->
+        <div class="header header-light">
+            <div class="container">
+                <nav id="navigation" class="navigation navigation-landscape">
+                    <div class="nav-header">
+                        <a class="nav-brand" href="./home.html">
+                            <img src="./../../static/assets/img/logo.png" class="logo" alt="" />
+                        </a>
+                        <div class="nav-toggle"></div>
+                        <div class="mobile_nav">
+                            <ul>
+                                <li class="_my_prt_list"><a href="#"><span>2</span>My List</a></li>
+                                <li><a href="#" data-toggle="modal" data-target="#login"><i class="fas fa-user-circle fa-lg"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-menus-wrapper" style="transition-property: none;">
+
+                           {% include 'user/header_body.html' %}
+
+                    </div>
+                </nav>
+            </div>
+        </div>
+    <!-- End Navigation -->
+        
+    <div class="clearfix"></div>
+    <!-- ============================ Top header ================================== -->
+{% endblock header %}

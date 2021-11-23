@@ -1,0 +1,410 @@
+{% extends 'user/base.html' %}
+{% block title %}Submit Property{% endblock title %}
+{% block body %}
+
+<!-- ============================ Page Title Start================================== -->
+<div class="page-title" style="background:#f4f4f4 url(static/assets/img/bg.jpg);" data-overlay="5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+
+                <div class="breadcrumbs-wrap">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Edit Property</li>
+                    </ol>
+                    <h2 class="breadcrumb-title">Edit Your Property</h2>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================ Page Title End ================================== -->
+
+<!-- ============================ Submit Property Start ================================== -->
+<section>
+
+    <div class="container">
+
+        <div class="col-lg-12 col-md-12">
+
+            <!--				<div class="alert alert-info" role="alert">-->
+            <!--					<p>If you don't have an account you can create one by <a href="#">Click Here</a></p>-->
+            <!--					</div>-->
+
+        </div>
+
+        <!-- Submit Form -->
+        <!-- Gallery
+        <div class="frm_submit_block">
+            <h3>Gallery</h3>
+            <div class="frm_submit_wrap">
+                <div class="form-row">
+
+                    <div class="form-group col-md-12">
+                        <label>Upload Gallery</label>
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group col-md-12">
+                                <input required name="property_photos" type="file" multiple class="form-control-file">
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12 col-md-12">
+                                    <input type="submit" class="btn btn-theme" name="submit" value="submit"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div> -->
+        <form method="POST" action="{% url 'edit_property_view' %}" enctype="multipart/form-data" >
+            {% csrf_token %}
+            <div class="col-lg-12 col-md-12">
+
+                <div class="submit-page p-0">
+
+                    <!-- Basic Information -->
+                    <div class="frm_submit_block">
+                        <h3>Basic Information</h3>
+                        <div class="frm_submit_wrap">
+                            <div class="form-row">
+                                <input type="hidden" name="property_id" class="form-control"  value="{{property1.property_id}}">
+                                <div class="form-group col-md-12">
+                                    <label>Property Title<a href="#" class="tip-topdata"
+                                                            data-tip="Property Title"><i
+                                            class="ti-help"></i></a></label>
+                                    <input type="text" name="property_title" class="form-control"  value="{{property1.property_title}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Status</label>
+                                    <select id="status" class="form-control" name="status">
+                                        <option value="">&nbsp;</option>
+                                        <option value="for_rent" {% if property1.property_status == "for_rent" %}
+                                            selected="selected"
+                                        {% endif %}>For Rent</option>
+                                        <option value="for_sale" {% if property1.property_status == "for_sale" %}
+                                              selected="selected"
+                                          {% endif %}>For Sale</option>
+
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Property Type</label>
+                                    <select id="ptypes" name="ptypes" class="form-control">
+                                        <option value="">&nbsp;</option>
+                                        <option value="Houses" {% if property1.property_type == "Houses" %}
+                                            selected="selected"
+                                        {% endif %}>Houses</option>
+                                        <option value="Apartment" {% if property1.property_type == "Apartment" %}
+                                            selected="selected"
+                                        {% endif %}>Apartment</option>
+                                        <option value="Villas" {% if property1.property_type == "Villas" %}
+                                            selected="selected"
+                                        {% endif %}>Villas</option>
+                                        <option value="Commercial" {% if property1.property_type == "Commercial" %}
+                                            selected="selected"
+                                        {% endif %}>Commercial</option>
+                                        <option value="Offices" {% if property1.property_type == "Offices" %}
+                                            selected="selected"
+                                        {% endif %}>Offices</option>
+                                        <option value="Garage" {% if property1.property_type == "Garage" %}
+                                            selected="selected"
+                                        {% endif %}>Garage</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Price</label>
+                                    <input type="text" name="price" class="form-control" placeholder="USD" value="{{property1.property_price}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Area</label>
+                                    <input type="text" name="area" class="form-control" value="{{property1.property_sqft_area}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Bedrooms</label>
+                                    <select id="bedrooms" name="no_of_bedrooms" class="form-control">
+                                        <option value="">&nbsp;</option>
+                                        <option value="1" {% if property1.property_bedrooms == 1 %}
+                                            selected="selected"
+                                        {% endif %}>1</option>
+                                        <option value="2" {% if property1.property_bedrooms == 2 %}
+                                            selected="selected"
+                                        {% endif %}>2</option>
+                                        <option value="3" {% if property1.property_bedrooms == 3 %}
+                                            selected="selected"
+                                        {% endif %}>3</option>
+                                        <option value="4" {% if property1.property_bedrooms == 4 %}
+                                            selected="selected"
+                                        {% endif %}>4</option>
+                                        <option value="5" {% if property1.property_bedrooms == 5 %}
+                                            selected="selected"
+                                        {% endif %}>5</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Bathrooms</label>
+                                    <select id="bathrooms" name="no_of_bathrooms" class="form-control">
+                                        <option value="">&nbsp;</option>
+                                        <option value="1" {% if property1.property_bathrooms == 1 %}
+                                            selected="selected"
+                                        {% endif %}>1</option>
+                                        <option value="2" {% if property1.property_bathrooms == 2 %}
+                                            selected="selected"
+                                        {% endif %}>2</option>
+                                        <option value="3" {% if property1.property_bathrooms == 3 %}
+                                            selected="selected"
+                                        {% endif %}>3</option>
+                                        <option value="4" {% if property1.property_bathrooms == 4 %}
+                                            selected="selected"
+                                        {% endif %}>4</option>
+                                        <option value="5" {% if property1.property_bathrooms == 5 %}
+                                            selected="selected"
+                                        {% endif %}>5</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gallery -->
+                    <div class="frm_submit_block">
+                        <h3>Gallery</h3>
+                        <div class="frm_submit_wrap">
+                            <div class="form-row">
+
+                                <div class="form-group col-md-12">
+                                    <label>Upload Gallery</label>
+                                    <input  name="property_photos" type="file" multiple
+                                           class="form-control-file">
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Location -->
+                    <div class="frm_submit_block">
+                        <h3>Location</h3>
+                        <div class="frm_submit_wrap">
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label>Address</label>
+                                    <input type="text" name="address" class="form-control"  value="{{property1.property_address}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>City</label>
+                                    <input type="text" name="city" class="form-control"  value="{{property1.property_city}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>State</label>
+                                    <input type="text" name="state" class="form-control"  value="{{property1.property_state}}">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label>Zip Code</label>
+                                    <input type="text" name="zipcode" class="form-control"  value="{{property1.property_zipcode}}">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Detailed Information -->
+                    <div class="frm_submit_block">
+                        <h3>Detailed Information</h3>
+                        <div class="frm_submit_wrap">
+                            <div class="form-row">
+
+                                <div class="form-group col-md-12">
+                                    <label>Description</label>
+                                    <textarea name="description" class="form-control h-120"> {{property1.property_description}}</textarea>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    <label>Other Features (optional)</label>
+                                    <div class="o-features">
+                                        <ul class="no-ul-list third-row">
+                                            <li>
+                                                <input id="a-1" class="checkbox-custom" name="a-1" type="checkbox"
+                                                       {% for i in property1.property_others
+                                                            if i == "AC" %}
+                                                                checked="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-1" class="checkbox-custom-label">Air Condition</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-2" class="checkbox-custom" name="a-2" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Bedding" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-2" class="checkbox-custom-label">Bedding</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-3" class="checkbox-custom" name="a-3" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Heating" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-3" class="checkbox-custom-label">Heating</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-4" class="checkbox-custom" name="a-4" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Internet" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-4" class="checkbox-custom-label">Internet</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-5" class="checkbox-custom" name="a-5" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Microwave" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-5" class="checkbox-custom-label">Microwave</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-6" class="checkbox-custom" name="a-6" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Smoking Allow" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-6" class="checkbox-custom-label">Smoking Allow</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-7" class="checkbox-custom" name="a-7" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Terrance" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-7" class="checkbox-custom-label">Terrace</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-8" class="checkbox-custom" name="a-8" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Balcony" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-8" class="checkbox-custom-label">Balcony</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-9" class="checkbox-custom" name="a-9" type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Icon" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-9" class="checkbox-custom-label">Icon</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-10" class="checkbox-custom" name="a-10"
+                                                       type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Wi-Fi" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-10" class="checkbox-custom-label">Wi-Fi</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-11" class="checkbox-custom" name="a-11"
+                                                       type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Beach" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-11" class="checkbox-custom-label">Beach</label>
+                                            </li>
+                                            <li>
+                                                <input id="a-12" class="checkbox-custom" name="a-12"
+                                                       type="checkbox"
+                                                {% for i in property1.property_others
+                                                            if i == "Parking" %}
+                                                                selected="checked"
+                                                            {% endif
+                                                        endfor %}>
+                                                <label for="a-12" class="checkbox-custom-label">Parking</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="frm_submit_block">
+                        <h3>Publish Property</h3>
+                        <div class="frm_submit_wrap">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label>Publish</label><br>
+                                    <input type="radio" id="published" name="publish" value="1" {% if property1.property_is_publish == 1 %}
+                                            checked="checked"
+                                        {% endif %}>
+                                    <label for="published">Published</label><br>
+                                    <input type="radio" id="not_published" name="publish" value="0" {% if property1.property_is_publish == 0 %}
+                                             checked="checked"
+                                        {% endif %}>
+                                    <label for="not_published">Not Published</label><br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-lg-12 col-md-12">
+                            <input type="submit" class="btn btn-theme" name="submit" value="submit"/>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+        <!--error starts message -->
+        {% for msg in messages %}
+        <div class="alert alert-danger alert-custom alert-light-{{msg.tags}} fade show mb-5"
+             role="alert">
+            <div class="alert-icon"><i class="flaticon-warning"></i></div>
+            <div class="alert-text">{{msg}}</div>
+            <div class="alert-close">
+                <button type="button" class="close ti-close"
+                        style="margin-top: -17px ; font-size: medium; color: indianred" data-dismiss="alert"
+                        aria-label="Close">
+                    <!--<span aria-hidden="true"><i class="ti-close"></i></span>-->
+                </button>
+            </div>
+        </div>
+        {% endfor %}
+        <!--error ends message -->
+    </div>
+    </div>
+
+</section>
+<!-- ============================ Submit Property End ================================== -->
+
+{% endblock body %}

@@ -1,0 +1,279 @@
+{% extends 'user/base.html' %}
+{% block title %}User Dashboard{% endblock title %}
+{% block head %}
+	<!-- semantic UI -->
+    <link rel="stylesheet" type='text/css' href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+{% endblock head %}
+{% block body %}
+
+	<!-- ============================ Page Title Start================================== -->
+		<div class="page-title" style="background:#f4f4f4 url(static/assets/img/slider-5.jpg);" data-overlay="5">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12 col-md-12">
+						
+						<div class="breadcrumbs-wrap">
+							<ol class="breadcrumb">
+								<li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+							</ol>
+							<h2 class="breadcrumb-title">Hello Adam, Welcome</h2>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	<!-- ============================ Page Title End ================================== -->
+		
+	<!-- ============================ User Dashboard ================================== -->
+		<section class="gray pt-5 pb-5">
+			<div class="container-fluid">
+							
+				<div class="row">
+
+					<!-- Start Sidemenu -->
+						{% include 'user/user_sidemenu.html' %}
+					<!-- End Sidemenu -->
+
+					<div class="col-lg-9 col-md-8">
+						<div class="dashboard-body">
+						
+							<div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12">
+									<h4>Your Current Package: <span class="pc-title theme-cl">Gold Package</span></h4>
+								</div>
+							</div>
+							
+							<div class="row">
+					
+								<div class="col-lg-4 col-md-6 col-sm-12">
+									<div class="dashboard_stats_wrap widget-1">
+										<div class="dashboard_stats_wrap_content"><h4>607</h4> <span>Listed Property</span></div>
+										<div class="dashboard_stats_wrap-icon"><i class="ti-location-pin"></i></div>
+									</div>	
+								</div>
+								
+								<div class="col-lg-4 col-md-6 col-sm-12">
+									<div class="dashboard_stats_wrap widget-3">
+										<div class="dashboard_stats_wrap_content"><h4>$10,540</h4> <span>Earned This Week</span></div>
+										<div class="dashboard_stats_wrap-icon"><i class="ti-wallet"></i></div>
+									</div>	
+								</div>
+								
+								<div class="col-lg-4 col-md-6 col-sm-12">
+									<div class="dashboard_stats_wrap widget-2">
+										<div class="dashboard_stats_wrap_content"><h4>5,40580</h4> <span>Earned This Month</span></div>
+										<div class="dashboard_stats_wrap-icon"><i class="ti-credit-card"></i></div>
+									</div>	
+								</div>
+
+							</div>
+							<!--  row -->
+
+							<!-- chart try -->
+							  <div id="container" style="width: 75%;">
+								<canvas id="pie-chart"></canvas>
+							  </div>
+
+							  <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+							  <script>
+
+								var config = {
+								  type: 'pie',
+								  data: {
+									datasets: [{
+									  data: {{ data|safe }},
+									  backgroundColor: [
+										'#696969', '#808080', '#A9A9A9', '#C0C0C0', '#D3D3D3'
+									  ],
+									  label: 'Population'
+									}],
+									labels: {{ labels|safe }}
+								  },
+								  options: {
+									responsive: true
+								  }
+								};
+
+								window.onload = function() {
+								  var ctx = document.getElementById('pie-chart').getContext('2d');
+								  window.myPie = new Chart(ctx, config);
+								};
+
+							  </script>
+							<!-- end chart -->
+
+
+							<div class="row">
+								<div class="col-lg-8 col-md-7 col-sm-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="mb-0">Extra Area Chart</h4>
+										</div>
+										<div class="card-body">
+											<ul class="list-inline text-center m-t-40">
+												<li>
+													<h5><i class="fa fa-circle m-r-5 text-warning"></i>Website A</h5>
+												</li>
+												<li>
+													<h5><i class="fa fa-circle m-r-5 text-danger"></i>Website B</h5>
+												</li>
+												<li>
+													<h5><i class="fa fa-circle m-r-5 text-success"></i>Website C</h5>
+												</li>
+											</ul>
+											<div class="chart" id="extra-area-chart" style="height: 300px; position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);"><svg height="300" version="1.1" width="602.5" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="overflow: hidden; position: relative; left: -0.25px;"><desc style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Created with Raphaël 2.2.0</desc><defs style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></defs><text x="32.859375" y="261" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">0</tspan></text><path fill="none" stroke="#e0e0e0" d="M45.359375,261H577.5" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.859375" y="202" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">50</tspan></text><path fill="none" stroke="#e0e0e0" d="M45.359375,202H577.5" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.859375" y="143" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">100</tspan></text><path fill="none" stroke="#e0e0e0" d="M45.359375,143H577.5" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.859375" y="84" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">150</tspan></text><path fill="none" stroke="#e0e0e0" d="M45.359375,84H577.5" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="32.859375" y="25" text-anchor="end" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">200</tspan></text><path fill="none" stroke="#e0e0e0" d="M45.359375,25H577.5" stroke-width="0.5" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><text x="577.5" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2016</tspan></text><text x="488.85037511410314" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2015</tspan></text><text x="400.2007502282063" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2014</tspan></text><text x="311.55112534230943" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2013</tspan></text><text x="222.65862477179368" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2012</tspan></text><text x="134.00899988589686" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2011</tspan></text><text x="45.359375" y="273.5" text-anchor="middle" font-family="sans-serif" font-size="12px" stroke="none" fill="#888888" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;" font-weight="normal" transform="matrix(1,0,0,1,0,7)"><tspan dy="4" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">2010</tspan></text><path fill="#34d647" stroke="none" d="M45.359375,261C67.52178122147421,246.25,111.84659366442264,204.95,134.00899988589686,202C156.17140610737107,199.05,200.49621855031947,238.87298221614228,222.65862477179368,237.4C244.8817499144226,235.9229822161423,289.3280001996805,191.6770177838577,311.55112534230943,190.2C333.71353156378365,188.72701778385772,378.0383440067321,220.4375,400.2007502282063,225.6C422.3631564496805,230.7625,466.68796889262893,228.55,488.85037511410314,231.5C511.01278133557736,234.45,555.3375937785258,244.77499999999998,577.5,249.2L577.5,261L45.359375,261Z" fill-opacity="0.8" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.8;"></path><path fill="none" stroke="#1dc130" d="M45.359375,261C67.52178122147421,246.25,111.84659366442264,204.95,134.00899988589686,202C156.17140610737107,199.05,200.49621855031947,238.87298221614228,222.65862477179368,237.4C244.8817499144226,235.9229822161423,289.3280001996805,191.6770177838577,311.55112534230943,190.2C333.71353156378365,188.72701778385772,378.0383440067321,220.4375,400.2007502282063,225.6C422.3631564496805,230.7625,466.68796889262893,228.55,488.85037511410314,231.5C511.01278133557736,234.45,555.3375937785258,244.77499999999998,577.5,249.2" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="45.359375" cy="261" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="134.00899988589686" cy="202" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="222.65862477179368" cy="237.4" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="311.55112534230943" cy="190.2" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="400.2007502282063" cy="225.6" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="488.85037511410314" cy="231.5" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="577.5" cy="249.2" r="0" fill="#1dc130" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><path fill="#3a4957" stroke="none" d="M45.359375,261C67.52178122147421,256.575,111.84659366442264,250.675,134.00899988589686,243.3C156.17140610737107,235.925,200.49621855031947,201.5581053351573,222.65862477179368,202C244.8817499144226,202.44310533515733,289.3280001996805,242.40894664842682,311.55112534230943,246.84C333.71353156378365,251.25894664842681,378.0383440067321,247.43,400.2007502282063,237.4C422.3631564496805,227.37,466.68796889262893,165.12500000000003,488.85037511410314,166.60000000000002C511.01278133557736,168.07500000000002,555.3375937785258,228.55,577.5,249.2L577.5,261L45.359375,261Z" fill-opacity="0.8" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.8;"></path><path fill="none" stroke="#2f3d4a" d="M45.359375,261C67.52178122147421,256.575,111.84659366442264,250.675,134.00899988589686,243.3C156.17140610737107,235.925,200.49621855031947,201.5581053351573,222.65862477179368,202C244.8817499144226,202.44310533515733,289.3280001996805,242.40894664842682,311.55112534230943,246.84C333.71353156378365,251.25894664842681,378.0383440067321,247.43,400.2007502282063,237.4C422.3631564496805,227.37,466.68796889262893,165.12500000000003,488.85037511410314,166.60000000000002C511.01278133557736,168.07500000000002,555.3375937785258,228.55,577.5,249.2" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="45.359375" cy="261" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="134.00899988589686" cy="243.3" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="222.65862477179368" cy="202" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="311.55112534230943" cy="246.84" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="400.2007502282063" cy="237.4" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="488.85037511410314" cy="166.60000000000002" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="577.5" cy="249.2" r="0" fill="#2f3d4a" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><path fill="#39aff5" stroke="none" d="M45.359375,261C67.52178122147421,259.525,111.84659366442264,261,134.00899988589686,255.1C156.17140610737107,245.5125,200.49621855031947,184.59459644322845,222.65862477179368,184.3C244.8817499144226,184.00459644322848,289.3280001996805,260.8635978112175,311.55112534230943,252.74C333.71353156378365,244.63859781121752,378.0383440067321,124.26750000000001,400.2007502282063,119.4C422.3631564496805,114.5325,466.68796889262893,197.57500000000002,488.85037511410314,213.8C511.01278133557736,230.025,555.3375937785258,240.35,577.5,249.2L577.5,261L45.359375,261Z" fill-opacity="0.8" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 0.8;"></path><path fill="none" stroke="#009efb" d="M45.359375,261C67.52178122147421,259.525,111.84659366442264,261,134.00899988589686,255.1C156.17140610737107,245.5125,200.49621855031947,184.59459644322845,222.65862477179368,184.3C244.8817499144226,184.00459644322848,289.3280001996805,260.8635978112175,311.55112534230943,252.74C333.71353156378365,244.63859781121752,378.0383440067321,124.26750000000001,400.2007502282063,119.4C422.3631564496805,114.5325,466.68796889262893,197.57500000000002,488.85037511410314,213.8C511.01278133557736,230.025,555.3375937785258,240.35,577.5,249.2" stroke-width="0" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></path><circle cx="45.359375" cy="261" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="134.00899988589686" cy="255.1" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="222.65862477179368" cy="184.3" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="311.55112534230943" cy="252.74" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="400.2007502282063" cy="119.4" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="488.85037511410314" cy="213.8" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle><circle cx="577.5" cy="249.2" r="0" fill="#009efb" stroke="#ffffff" stroke-width="1" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></circle></svg><div class="morris-hover morris-default-style" style="left: 3.11718px; top: 153px; display: none;"><div class="morris-hover-row-label">2010</div><div class="morris-hover-point" style="color: #1dc130">
+												Website A:
+												0
+												</div><div class="morris-hover-point" style="color: #2f3d4a">
+												Website B:
+												0
+												</div><div class="morris-hover-point" style="color: #009efb">
+												Website C:
+												0
+												</div></div></div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="col-lg-4 col-md-5 col-sm-12">
+									<div class="card">
+										<div class="card-header">
+											<h6>Notifications</h6>
+										</div>
+										<div class="ground-list ground-list-hove">
+											<div class="ground ground-single-list">
+												<a href="#">
+													<div class="btn-circle-40 theme-cl theme-bg-light"><i class="ti-home"></i></div>
+												</a>
+
+												<div class="ground-content">
+													<h6><a href="#">Your listing <strong>Azreal Modern</strong> has been approved!.</a></h6>
+													<span class="small">Just Now</span>
+												</div>
+											</div>
+											
+											<div class="ground ground-single-list">
+												<a href="#">
+													<div class="btn-circle-40 theme-cl theme-bg-light"><i class="ti-comment-alt"></i></div>
+												</a>
+
+												<div class="ground-content">
+													<h6><a href="#">Litha Lynes left a review on <strong>Renovated Apartment</strong></a></h6>
+													<span class="small">20 min ago</span>
+												</div>
+											</div>
+											
+											<div class="ground ground-single-list">
+												<a href="#">
+													<div class="btn-circle-40 theme-cl theme-bg-light"><i class="ti-heart"></i></div>
+												</a>
+
+												<div class="ground-content">
+													<h6><a href="#">Someone bookmark your View listing!<strong>Sargun Villa Bay</strong></a></h6>
+													<span class="small">1 day ago</span>
+												</div>
+											</div>
+											
+											<div class="ground ground-single-list">
+												<a href="#">
+													<div class="btn-circle-40 theme-cl theme-bg-light"><i class="ti-home"></i></div>
+												</a>
+
+												<div class="ground-content">
+													<h6><a href="#">Your listing <strong>Modern Family Home</strong> has been approved!.</a></h6>
+													<span class="small">10 days ago</span>
+												</div>
+											</div>
+											
+											<div class="ground ground-single-list">
+												<a href="#">
+													<div class="btn-circle-40 theme-cl theme-bg-light"><i class="ti-comment-alt"></i></div>
+												</a>
+
+												<div class="ground-content">
+													<h6><a href="#">Adam Brown left a review on <strong>Renovated Apartment</strong></a></h6>
+													<span class="small">Just Now</span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- row -->
+							
+							<div class="row">
+								<div class="col-lg-12 col-md-12">
+									<div class="card">
+										<div class="card-header">
+											<h4 class="mb-0">Order Status</h4>
+										</div>
+										<div class="card-body p-0">
+											<div class="table-responsive">
+												<table class="table table-lg table-hover">
+													<thead>
+														<tr>
+															<th>Name</th>
+															<th>Product ID</th>
+															<th>Status</th>
+															<th>Price</th>
+															<th>Date Created</th>
+														</tr>
+													</thead>
+													
+													<tbody>
+														<tr>
+															<td><a href="#"><img src="static/assets/img/p-1.png" class="avatar avatar-30 mr-2" alt="Avatar">Luxury House</a></td>
+															<td>#258475</td>
+															<td><div class="label text-success bg-success-light">Paid</div></td>                
+															<td>$ 310</td>
+															<td>04/10/2013</td>  
+														</tr>
+														
+														<tr>
+															<td><a href="#"><img src="static/assets/img/p-2.png" class="avatar avatar-30 mr-2" alt="Avatar">Sargun Apartment</a></td>
+															<td>#249578</td>
+															<td><div class="label text-warning bg-warning-light">Pending</div></td>							
+															<td>$ 584.14</td>
+															<td>05/08/2014</td> 
+														</tr>
+														
+														<tr>
+															<td><a href="#"><img src="static/assets/img/p-3.png" class="avatar avatar-30 mr-2" alt="Avatar">Preet Silver City</a></td>
+															<td>#248712</td>
+															<td><div class="label text-danger bg-danger-light">Cancel</div></td>  
+															<td>$ 710.5</td>
+															<td>11/05/2015</td>                                          
+														</tr>
+														
+														<tr>
+															<td><a href="#"><img src="static/assets/img/p-4.png" class="avatar avatar-30 mr-2" alt="Avatar">Mount See Villa</a></td>
+															<td>#287246</td>
+															<td><div class="label text-success bg-success-light">Paid</div></td>
+															<td>$ 482.70</td>
+															<td>06/09/2016</td>
+														</tr>
+														
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- row -->
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</section>
+	<!-- ============================ User Dashboard End ================================== -->
+		
+{% endblock body %}
