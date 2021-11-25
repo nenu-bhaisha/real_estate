@@ -139,8 +139,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'rentup.help@gmail.com'
 EMAIL_HOST_PASSWORD = 'Password123*'
-EMAIL_HOST_USER = 'arjunpurohit900@gmail.com'
-EMAIL_HOST_PASSWORD = '9913866125'
 
 EMAIL_USE_SSL = False
 

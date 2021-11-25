@@ -10,7 +10,7 @@ from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth import authenticate, login as login_auth, logout as logout_auth
 from django.views.generic import TemplateView
 from .models import *
-from .models import user_details, property, property_image, subscribe, agent_data
+from .models import user_details, property, property_image, subscribe, agent_data, bookmarked_property
 from django.db import connection
 
 # Create your views here.
@@ -45,27 +45,33 @@ def home(request):
 
         # photo = property_image.objects.raw('select property_image_id,property_image_url from userside_property_image where property_id_id = 18')
         photo = property_image.objects.all()
-        print('Photo is : ', photo)
+
         # p_image_id = property_image.objects.raw('select property_image_id,property_id_id from userside_property_image')
         p_type = property.objects.raw(
             "select property_id,COUNT(*) from userside_property WHERE property_type = 'Apartment'")
-        print('p_type : ', p_type)
+
+        #Agent Data
+        cursor = connection.cursor()
+        cursor.execute("call AgentDataView()")
+        agent = cursor.fetchall()
+
 
         data = {}
         data['property_details'] = property_details
         data['photo'] = photo
         data['p_id'] = p_id
         data['p_type'] = p_type
+        city = property.objects.values('property_city').distinct()
+        p_type = q = property.objects.values('property_type').distinct()
+        data['city_passed'] = city
+        data['property_passed'] = p_type
+        data['agent_data'] = agent
 
         return render(request, 'user/home.html', data)
-
-    # city = property.objects.all()
-    # p_type = q = property.objects.values('property_type').distinct()
-    # return render(request, 'user/home.html', {"city_passed": city, "property_passed": p_type})
+        # return render(request, 'user/home.html', {"data": data, "city_passed": city, "property_passed": p_type})
 
 
 # ========= AUTHENTICATION ========
-
 def register(request):
     if request.POST:
         rusername = request.POST['rusername']
@@ -115,20 +121,19 @@ def register(request):
 
 
 def login(request):
-    if request.user.is_authenticated:
-        return redirect('/')
-    else:
-        if request.POST:
-            login_user = request.POST['lusername']
-            login_password = request.POST['lpassword']
-            logged_user = None
-            logged_user = user_details.objects.get(user_email=login_user, user_password=login_password)
-            request.session['user_session'] = logged_user.user_id
-            request.session['user_name'] = logged_user.user_name
-            if logged_user is not None:
-                print(f"Logged in user is {logged_user.user_id}")
-                redirect('/')
-        return render(request, 'user/home.html')
+    if request.POST:
+        print("second login block")
+        login_user = request.POST['lusername']
+        login_password = request.POST['lpassword']
+        logged_user = None
+        logged_user = user_details.objects.get(user_email=login_user, user_password=login_password)
+        request.session['user_session'] = logged_user.user_id
+        request.session['user_name'] = logged_user.user_name
+        if logged_user is not None:
+            print("third login block")
+            print(f"Logged in user is {logged_user.user_id}")
+            return redirect("/home")
+    return render(request, 'user/home.html')
 
 
 def change_password(request):
@@ -261,7 +266,13 @@ def property_type(request):
         city_selected = request.POST.get('property_city_option')
         property_type_selected = request.POST.get('property_type_option')
         print(f"city is {city_selected} and property type is {property_type_selected}")
-    return render(request, 'user/property_type.html')
+        # pselected = property.objects.values_list('property_id', flat=True).filter(property_type=property_type_selected, property_city=city_selected)
+        pselected = property.objects.filter(property_type=property_type_selected, property_city=city_selected)
+        # p = property.objects.filter(property_id=i)
+        print(f"selected city is ->>>>{city_selected}  and {property_type_selected}")
+        print(f"selected property is ->>>>{pselected}")
+
+    return render(request, 'user/property_type.html', {"pselected": pselected})
 
 
 # def property_type(request, property_status):
@@ -484,7 +495,35 @@ def delete_property(request, property_id):
 
 
 def user_bookmark_list(request):
+    user_session = request.session.get('user_session')
+    bookmark = bookmarked_property.objects.filter(bookmarked_property_user_id=user_session)
+    property_info = property.objects.all()
+    property_img = property_image.objects.all()
+
+    return render(request, 'user/user_bookmark-list.html',
+                  {"property_info": property_info, "bookmark": bookmark, "property_img": property_img})
+
+
+# return render(request, 'user/user_bookmark-list.html')
+
+def add_bookmark(request, property_id):
+    user_session = request.session.get('user_session')
+    #bookmark = bookmarked_property(bookmarked_property_property_id=property_id,
+     #                              bookmarked_property_user_id=user_session)
+
+
+    bookmarked_property.objects.create(bookmarked_property_property_id=property_id, bookmarked_property_user_id=user_session)
+    bookmarked_property.save()
+    # return redirect("user-bookmark_list")
     return render(request, 'user/user_bookmark-list.html')
+
+
+def delete_bookmark(request, property_id):
+    user_session = request.session.get('user_session')
+    bookmark = bookmarked_property.objects.filter(bookmarked_property_user_id=user_session,
+                                                  bookmarked_property_property_id=property_id)
+    bookmark.delete()
+    return redirect("user-bookmark_list")
 
 
 # ====== OTHERS ====================
@@ -502,7 +541,7 @@ def contact(request):
         contact_Email = request.POST.get('contact_Email')
         contact_Subject = request.POST.get('contact_Subject')
         contact_Message = request.POST.get('contact_Message')
-
+        print("Coneatasdfasdfasd",contact_Email)
         contact_us.objects.create(contact_name=contact_Name, contact_email=contact_Email, contact_contact=0,
                                   contact_subject=contact_Subject, contact_message=contact_Message)
 

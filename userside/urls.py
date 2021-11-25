@@ -44,7 +44,9 @@ urlpatterns = [
     path('edit_property/<int:property_id>', views.edit_property, name="edit_property"),
     path('edit_property_view', views.edit_property_view, name='edit_property_view'),
     path('view_property/<int:property_id>', views.view_property, name="view_property"),
+    path('add_bookmark/<int:property_id>', views.add_bookmark, name="add_bookmark"),
     path('user_bookmark_list', views.user_bookmark_list, name='user-bookmark_list'),
+    path('delete_bookmark/<int:property_id>', views.delete_bookmark, name="delete_bookmark"),
 
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),

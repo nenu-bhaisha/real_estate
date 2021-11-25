@@ -48,66 +48,73 @@
 											<th><i class="fa fa-file-text"></i> Property</th>
 											<th></th>
 										</tr>
-
+										{% for p in property_info  %}
+										{% for b in bookmark  %}
+										{% if p.property_id == b.bookmarked_property_property_id.property_id %}
 										<!-- Item #1 -->
 										<tr>
 											<td class="dashboard_propert_wrapper">
 												<img src="static/assets/img/p-2.png" alt="">
 												<div class="title">
-													<h4><a href="#">Serene Uptown</a></h4>
-													<span>6 Bishop Ave. Perkasie, PA </span>
-													<span class="table-property-price">$900 / monthly</span>
+
+													{% if p.property_status == 'for_rent' %} <div style="color:#808000;"><b><span><div class="_leads_status"><span class="active"><center>For Rent</center></span></div></span></b></div> {% endif %}
+													{% if p.property_status == 'for_sale' %} <div style="color:red;"><b><span><div class="_leads_status"><span class="expire"><center>For Sale</center></span></div></span></b></div> {% endif %}
+													<h4><a href="#">{{p.property_title}}</a></h4>
+													<span>{{p.property_address}}, {{p.property_city}}, {{p.property_state}}, {{p.property_zipcode}} </span>
+													<span class="table-property-price">Rs. {{p.property_price}}</span>
 												</div>
 											</td>
 											<td class="action">
-												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>
+												<a href="{% url 'delete_bookmark' property_id=p.property_id %}" class="delete"><i class="ti-close"></i> Delete</a>
 											</td>
 										</tr>
-
+										{% endif %}
+										{% endfor %}
+										{% endfor %}
 										<!-- Item #2 -->
-										<tr>
-											<td class="dashboard_propert_wrapper">
-												<img src="static/assets/img/p-3.png" alt="">
-												<div class="title">
-													<h4><a href="#">Oak Tree Villas</a></h4>
-													<span>71 Lower River Dr. Bronx, NY</span>
-													<span class="table-property-price">$535,000</span>
-												</div>
-											</td>
-											<td class="action">
-												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>
-											</td>
-										</tr>
+<!--										<tr>-->
+<!--											<td class="dashboard_propert_wrapper">-->
+<!--												<img src="static/assets/img/p-3.png" alt="">-->
+<!--												<div class="title">-->
+<!--													<h4><a href="#">Oak Tree Villas</a></h4>-->
+<!--													<span>71 Lower River Dr. Bronx, NY</span>-->
+<!--													<span class="table-property-price">$535,000</span>-->
+<!--												</div>-->
+<!--											</td>-->
+<!--											<td class="action">-->
+<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+<!--											</td>-->
+<!--										</tr>-->
 
-										<!-- Item #3 -->
-										<tr>
-											<td class="dashboard_propert_wrapper">
-												<img src="static/assets/img/p-4.png" alt="">
-												<div class="title">
-													<h4><a href="#">Selway Villas</a></h4>
-													<span>33 William St. Northbrook, IL </span>
-													<span class="table-property-price">$420,000</span>
-												</div>
-											</td>
-											<td class="action">
-												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>
-											</td>
-										</tr>
+<!--										&lt;!&ndash; Item #3 &ndash;&gt;-->
+<!--										<tr>-->
+<!--											<td class="dashboard_propert_wrapper">-->
+<!--												<img src="static/assets/img/p-4.png" alt="">-->
+<!--												<div class="title">-->
+<!--													<h4><a href="#">Selway Villas</a></h4>-->
+<!--													<span>33 William St. Northbrook, IL </span>-->
+<!--													<span class="table-property-price">$420,000</span>-->
+<!--												</div>-->
+<!--											</td>-->
+<!--											<td class="action">-->
+<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+<!--											</td>-->
+<!--										</tr>-->
 
-										<!-- Item #4 -->
-										<tr>
-											<td class="dashboard_propert_wrapper">
-												<img src="static/assets/img/p-5.png" alt="">
-												<div class="title">
-													<h4><a href="#">Town Manchester</a></h4>
-													<span> 7843 Durham Avenue, MD  </span>
-													<span class="table-property-price">$420,000</span>
-												</div>
-											</td>
-											<td class="action">
-												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>
-											</td>
-										</tr>
+<!--										&lt;!&ndash; Item #4 &ndash;&gt;-->
+<!--										<tr>-->
+<!--											<td class="dashboard_propert_wrapper">-->
+<!--												<img src="static/assets/img/p-5.png" alt="">-->
+<!--												<div class="title">-->
+<!--													<h4><a href="#">Town Manchester</a></h4>-->
+<!--													<span> 7843 Durham Avenue, MD  </span>-->
+<!--													<span class="table-property-price">$420,000</span>-->
+<!--												</div>-->
+<!--											</td>-->
+<!--											<td class="action">-->
+<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+<!--											</td>-->
+<!--										</tr>-->
 
 									</tbody>
 								</table>

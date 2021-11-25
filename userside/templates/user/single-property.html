@@ -3,31 +3,53 @@
 {% block body %}
 	<!-- ============================ Hero Banner  Start================================== -->
 	<!-- Gallery Part Start -->
-		<section class="gallery_parts pt-2 pb-2 d-none d-sm-none d-md-none d-lg-none d-xl-block">
-			<div class="container">
-				<div class="row align-items-center">
-					<div class="col-lg-8 col-md-7 col-sm-12 pr-1">
-						<div class="gg_single_part left"><a href="/static/assets/img/p-2.png" class="mfp-gallery"><img src="static/assets/img/p-2.png" class="img-fluid mx-auto" alt="" /></a></div>
-					</div>
-					<div class="col-lg-4 col-md-5 col-sm-12 pl-1">
-						<div class="gg_single_part-right min"><a href="/static/assets/img/p-5.png" class="mfp-gallery"><img src="static/assets/img/p-5.png" class="img-fluid mx-auto" alt="" /></a></div>
-						<div class="gg_single_part-right min mt-2 mb-2"><a href="static/assets/img/p-3.png" class="mfp-gallery"><img src="static/assets/img/p-3.png" class="img-fluid mx-auto" alt="" /></a></div>
-						<div class="gg_single_part-right min"><a href="/static/assets/img/p-4.png" class="mfp-gallery"><img src="static/assets/img/p-4.png" class="img-fluid mx-auto" alt="" /></a></div>
-					</div>
-				</div>
-			</div>
-		</section>
+<!--		{%for p in property_photo%}-->
+<!--		<section class="gallery_parts pt-2 pb-2 d-none d-sm-none d-md-none d-lg-none d-xl-block">-->
+<!--			<div class="container">-->
+<!--				<div class="row align-items-center">-->
+<!--					<div class="col-lg-7 col-md-8 col-sm-12 pr-1">-->
+<!--						<div class="gg_single_part left">-->
+<!--							<a href="{{p.property_image_url.url}}" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--&lt;!&ndash;					<div class="col-lg-8 col-md-7 col-sm-12 pr-1">&ndash;&gt;-->
+<!--&lt;!&ndash;						<div class="gg_single_part left"><a href="/static/assets/img/p-2.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
+<!--&lt;!&ndash;					</div>&ndash;&gt;-->
+<!--&lt;!&ndash;					<div class="col-lg-4 col-md-5 col-sm-12 pl-1">&ndash;&gt;-->
+<!--&lt;!&ndash;						<div class="gg_single_part-right min"><a href="/static/assets/img/p-5.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
+<!--&lt;!&ndash;						<div class="gg_single_part-right min mt-2 mb-2"><a href="static/assets/img/p-3.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
+<!--&lt;!&ndash;						<div class="gg_single_part-right min"><a href="/static/assets/img/p-4.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
+<!--&lt;!&ndash;					</div>&ndash;&gt;-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</section>-->
 
-		<div class="featured_slick_gallery gray d-block d-md-block d-lg-block d-xl-none">
-			<div class="featured_slick_gallery-slide">
-				<div class="featured_slick_padd"><a href="./../../static/assets/img/slider-3.jpg" class="mfp-gallery"><img src="./../../static/assets/img/slider-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-3.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-4.jpg" class="img-fluid mx-auto" alt="" /></a></div>
-				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="./../../static/assets/img/slider-5.jpg" class="img-fluid mx-auto" alt="" /></a></div>
+<!--		<div class="featured_slick_gallery gray d-block d-md-block d-lg-block d-xl-none">-->
+<!--			<div class="featured_slick_gallery-slide">-->
+<!--				<div class="featured_slick_padd"><a href="./../../static/assets/img/slider-3.jpg" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
+<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
+<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
+<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
 
-			</div>
-		</div>
+<!--			</div>-->
+<!--		</div>-->
+<!--		{%endfor%}-->
+
 	<!-- ============================ Hero Banner End ================================== -->
+
+
+<!-- ============================ Hero Banner  Start================================== -->
+			<div class="home-slider margin-bottom-0">
+
+				<!-- Slide -->
+				{%for p in property_photo%}
+<!--					<div data-background-image="{{p.property_image_url.url}}" class="item">-->
+<!--				</div>-->
+				<a href="{{p.property_image_url.url}}" class="mfp-gallery" id="slider"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" width="80%" /></a>
+				{% endfor %}
+			</div>
+			<!-- ============================ Hero Banner End ================================== -->
+
 
 	<!-- ============================ Property Detail Start ================================== -->
 		<section class="gray">
@@ -55,7 +77,7 @@
 							<div class="property_detail_section">
 								<div class="prt-sect-pric">
 									<ul class="_share_lists light">
-										<li><a href="#"><i class="fa fa-bookmark"></i></a></li>
+										<li><a href="{% url 'add_bookmark' property_id=property_details.property_id %}"><i class="fa fa-bookmark"></i></a></li>
 										<li><a href="#"><i class="fa fa-share"></i></a></li>
 									</ul>
 								</div>
