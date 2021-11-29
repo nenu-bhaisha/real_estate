@@ -70,7 +70,7 @@
 														<th scope="col">Price</th>
 														<th scope="col">Status</th>
 														<th scope="col">Type</th>
-														<th scope="col" class="m2_hide">Posted On</th>
+<!--														<th scope="col" class="m2_hide">Posted On</th>-->
 														<th scope="col">Published</th>
 														<th scope="col"><center>Action</center></th>
 													</tr>
@@ -82,10 +82,21 @@
 														<td>
 															<div class="dash_prt_wrap">
 																<div class="dash_prt_thumb">
-																	<img src="static/assets/img/p-1.png" class="img-fluid" alt="" />
+<!--																	<img src="static/assets/img/p-1.png" class="img-fluid" alt="" />-->
+																	<div class="list-img-slide">
+																		<div class="click">
+																			{%for photo in photo%}
+																				{%if property.property_id == photo.property_id_id%}
+																					<div><a href="#"><img src="{{photo.property_image_url.url}}"class="img-fluid mx-auto" alt=""/></a></div>
+																				{% endif %}
+																			{% endfor %}
+
+																		</div>
+																	</div>
+
 																</div>
 																<div class="dash_prt_caption">
-																	<h5>{{property.property_title}}</h5>
+																	<h5><a href="/single_property/{{property.property_id}}">{{property.property_title}}</a></h5>
 																	<div class="prt_dashb_lot">{{property.property_address}},</div>
 																	<div class="prt_dashb_lot">{{property.property_city}}, {{property.property_state}}</div>
 																	<div class="prt_dashb_lot">{{property.property_zipcode}}</div>
@@ -96,17 +107,17 @@
 															<div class="prt_dash_rate"><span>Rs. {{property.property_price}}</span></div>
 														</td>
 														<td >
-															{% if property.property_status == 'for_rent' %} <div style="color:#808000;"><b><span>Rent</span></b></div> {% endif %}
-															{% if property.property_status == 'for_sale' %} <div style="color:red;"><b><span>Sale</span></b></div> {% endif %}
+															{% if property.property_status == 'for_rent' %} <div style="color:#808000;"><b><span><div class="_leads_status"><span class="active">Rent</span></div></span></b></div> {% endif %}
+															{% if property.property_status == 'for_sale' %} <div style="color:red;"><b><span><div class="_leads_status"><span class="expire">Sale</span></div></span></b></div> {% endif %}
 														</td>
 														<td class="m2_hide">
 															<div class="_leads_view"><h5 class="up">{{property.property_type}}</h5></div>
 															<!--<div class="_leads_view_title"><span>Total Views</span></div>-->
 														</td>
-														<td class="m2_hide">
-															<div class="_leads_posted"><h5>{{property.property_added_date}}</h5></div>
-															<!--<div class="_leads_view_title"><span>16 Days ago</span></div>-->
-														</td>
+<!--														<td class="m2_hide">-->
+<!--															<div class="_leads_posted"><h5>{{property.property_added_date}}</h5></div>-->
+<!--															&lt;!&ndash;<div class="_leads_view_title"><span>16 Days ago</span></div>&ndash;&gt;-->
+<!--														</td>-->
 														<td>
 
 															{% if property_sold %}
@@ -137,54 +148,7 @@
 														</td>
 													</tr>
 													{% endfor %}
-													<!-- tr block -->
-													<!--
-													<tr>
-														<td>
-															<div class="dash_prt_wrap">
-																<div class="dash_prt_thumb">
-																	<img src="static/assets/img/p-2.png" class="img-fluid" alt="" />
-																</div>
-																<div class="dash_prt_caption">
-																	<h5>4 Bhk Luxury Villa</h5>
-																	<div class="prt_dashb_lot">5682 Brown River Suit 18</div>
-																	<div class="prt_dash_rate"><span>$ 2,200,000</span></div>
-																</div>
-															</div>
-														</td>
-														<td class="m2_hide">
-															<div class="prt_leads"><span>27 till now</span></div>
-															<div class="prt_leads_list">
-																<ul>
-																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
-																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
-																	<li><a href="#" class="_leads_name style-1">K</a></li>
-																	<li><a href="#"><img src="static/assets/img/team-1.jpg" class="img-fluid img-circle" alt="" /></a></li>
-																	<li><a href="#" class="leades_more">10+</a></li>
-																</ul>
-															</div>
-														</td>
-														<td class="m2_hide">
-															<div class="_leads_view"><h5 class="up">816</h5></div>
-															<div class="_leads_view_title"><span>Total Views</span></div>
-														</td>
-														<td class="m2_hide">
-															<div class="_leads_posted"><h5>16 Aug - 12:40</h5></div>
-															<div class="_leads_view_title"><span>16 Days ago</span></div>
-														</td>
-														<td>
-															<div class="_leads_status"><span class="expire">Expired</span></div>
-															<div class="_leads_view_title"><span>Till 12 Oct</span></div>
-														</td>
-														<td>
-															<div class="_leads_action">
-																<a href="#"><i class="fas fa-edit"></i></a>
-																<a href="#"><i class="fas fa-trash"></i></a>
-															</div>
-														</td>
-													</tr>
-													-->
-													<!-- tr block -->
+
 
 												</tbody>
 											</table>

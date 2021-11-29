@@ -2,140 +2,178 @@
 {% block title %}Bookmark List{% endblock title %}
 {% block body %}
 
-	<!-- ============================ Page Title Start================================== -->
-		<div class="page-title" style="background:#f4f4f4 url(static/assets/img/slider-5.jpg);" data-overlay="5">
-			<div class="container">
-				<div class="row">
-					<div class="col-lg-12 col-md-12">
-						
-						<div class="breadcrumbs-wrap">
-							<ol class="breadcrumb">
-								<li class="breadcrumb-item active" aria-current="page">Saved Properties</li>
-							</ol>
-							<h2 class="breadcrumb-title">Your All Saved Properties</h2>
-						</div>
-						
-					</div>
-				</div>
-			</div>
-		</div>
-	<!-- ============================ Page Title End ================================== -->
-		
-	<!-- ============================ User Dashboard ================================== -->
-		<section class="gray pt-5 pb-5">
-			<div class="container-fluid">
-							
-				<div class="row">
-					
-					<!-- Start Sidemenu -->
-						{% include 'user/user_sidemenu.html' %}
-					<!-- End Sidemenu -->
-					
-					<div class="col-lg-9 col-md-8 col-sm-12">
-						<div class="dashboard-body">
-						
-							<div class="dashboard-wraper">
-							
-								<!-- Bookmark Property -->
-								<div class="frm_submit_block">	
-									<h4>Bookmark Property</h4>
-								</div>
-								
-								<table class="property-table-wrap responsive-table bkmark">
+<!-- ============================ Page Title Start================================== -->
+<div class="page-title" style="background:#f4f4f4 url(static/assets/img/slider-5.jpg);" data-overlay="5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
 
-									<tbody>
-										<tr>
-											<th><i class="fa fa-file-text"></i> Property</th>
-											<th></th>
-										</tr>
-										{% for p in property_info  %}
-										{% for b in bookmark  %}
-										{% if p.property_id == b.bookmarked_property_property_id.property_id %}
-										<!-- Item #1 -->
-										<tr>
-											<td class="dashboard_propert_wrapper">
-												<img src="static/assets/img/p-2.png" alt="">
-												<div class="title">
+                <div class="breadcrumbs-wrap">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item active" aria-current="page">Saved Properties</li>
+                    </ol>
+                    <h2 class="breadcrumb-title">Your All Saved Properties</h2>
+                </div>
 
-													{% if p.property_status == 'for_rent' %} <div style="color:#808000;"><b><span><div class="_leads_status"><span class="active"><center>For Rent</center></span></div></span></b></div> {% endif %}
-													{% if p.property_status == 'for_sale' %} <div style="color:red;"><b><span><div class="_leads_status"><span class="expire"><center>For Sale</center></span></div></span></b></div> {% endif %}
-													<h4><a href="#">{{p.property_title}}</a></h4>
-													<span>{{p.property_address}}, {{p.property_city}}, {{p.property_state}}, {{p.property_zipcode}} </span>
-													<span class="table-property-price">Rs. {{p.property_price}}</span>
-												</div>
-											</td>
-											<td class="action">
-												<a href="{% url 'delete_bookmark' property_id=p.property_id %}" class="delete"><i class="ti-close"></i> Delete</a>
-											</td>
-										</tr>
-										{% endif %}
-										{% endfor %}
-										{% endfor %}
-										<!-- Item #2 -->
-<!--										<tr>-->
-<!--											<td class="dashboard_propert_wrapper">-->
-<!--												<img src="static/assets/img/p-3.png" alt="">-->
-<!--												<div class="title">-->
-<!--													<h4><a href="#">Oak Tree Villas</a></h4>-->
-<!--													<span>71 Lower River Dr. Bronx, NY</span>-->
-<!--													<span class="table-property-price">$535,000</span>-->
-<!--												</div>-->
-<!--											</td>-->
-<!--											<td class="action">-->
-<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
-<!--											</td>-->
-<!--										</tr>-->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ============================ Page Title End ================================== -->
 
-<!--										&lt;!&ndash; Item #3 &ndash;&gt;-->
-<!--										<tr>-->
-<!--											<td class="dashboard_propert_wrapper">-->
-<!--												<img src="static/assets/img/p-4.png" alt="">-->
-<!--												<div class="title">-->
-<!--													<h4><a href="#">Selway Villas</a></h4>-->
-<!--													<span>33 William St. Northbrook, IL </span>-->
-<!--													<span class="table-property-price">$420,000</span>-->
-<!--												</div>-->
-<!--											</td>-->
-<!--											<td class="action">-->
-<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
-<!--											</td>-->
-<!--										</tr>-->
+<!-- ============================ User Dashboard ================================== -->
+<section class="gray pt-5 pb-5">
+    <div class="container-fluid">
 
-<!--										&lt;!&ndash; Item #4 &ndash;&gt;-->
-<!--										<tr>-->
-<!--											<td class="dashboard_propert_wrapper">-->
-<!--												<img src="static/assets/img/p-5.png" alt="">-->
-<!--												<div class="title">-->
-<!--													<h4><a href="#">Town Manchester</a></h4>-->
-<!--													<span> 7843 Durham Avenue, MD  </span>-->
-<!--													<span class="table-property-price">$420,000</span>-->
-<!--												</div>-->
-<!--											</td>-->
-<!--											<td class="action">-->
-<!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
-<!--											</td>-->
-<!--										</tr>-->
+        <div class="row">
 
-									</tbody>
-								</table>
-								
-							</div>
-							
-							<div class="row">
-								<div class="col-md-12 col-lg-12 mt-4">
-									<footer class="text-center">
-										<p class="mb-0">© 2019 Rikada. Designd By <a href="https://themezhub.com/">Themez Hub</a> All Rights Reserved</p>
-									</footer>
-								</div>
-							</div>
-							<!-- row -->
-						
-						</div>
-					</div>
-					
-				</div>
-			</div>
-		</section>
-	<!-- ============================ User Dashboard End ================================== -->
+            <!-- Start Sidemenu -->
+            {% include 'user/user_sidemenu.html' %}
+            <!-- End Sidemenu -->
+
+            <div class="col-lg-9 col-md-8 col-sm-12">
+                <div class="dashboard-body">
+
+                    <div class="dashboard-wraper">
+
+                        <!-- Bookmark Property -->
+                        <div class="frm_submit_block">
+                            <h4>Bookmark Property</h4>
+                        </div>
+
+                        <table class="property-table-wrap responsive-table bkmark">
+
+                            <tbody>
+                            <tr>
+                                <th><i class="fa fa-file-text"></i> Property</th>
+                                <th style="text-align:center"><i class="fa fa-file-text"></i> Status</th>
+                                <th style="text-align:right"><i class="fa fa-file-text"></i> Action</th>
+                            </tr>
+                            {% for p in property_info %}
+                            {% for b in bookmark %}
+                            {% if p.property_id == b.bookmarked_property_property_id.property_id %}
+                            <!-- Item #1 -->
+                            <tr>
+                                <td>
+                                    <div class="dash_prt_wrap">
+                                        <div class="dash_prt_thumb">
+
+                                            <!--																	<img src="static/assets/img/p-1.png" class="img-fluid" alt="" />-->
+                                            <div class="list-img-slide">
+                                                <div class="click">
+
+                                                    {%for photo in photo%}
+                                                    {%if p.property_id == photo.property_id_id%}
+                                                    <div><a href="#"><img src="{{photo.property_image_url.url}}"
+                                                                          class="img-fluid mx-auto" alt=""/></a></div>
+                                                    {% endif %}
+                                                    {% endfor %}
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="dash_prt_caption">
+
+
+                                            <h5><a href="/single_property/{{p.property_id}}">{{p.property_title}}</a>
+                                            </h5>
+
+                                            <div class="prt_dashb_lot">{{p.property_address}}, {{p.property_city}},
+                                                {{p.property_state}}, {{p.property_zipcode}}
+                                            </div>
+                                            <div class="prt_dashb_lot"><b>Rs. {{p.property_price}}</b></div>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    {% if p.property_status == 'for_rent' %}
+                                    <div style="color:#808000;"><b><span><span class="active"><center
+                                            style="font-size:13px"><div class="_leads_status"><span
+                                            class="active">Rent</span></div></center></span></span></b></div>
+                                    {% endif %}
+                                    {% if p.property_status == 'for_sale' %}
+                                    <div style="color:red;"><b><span><span class="expire"><center
+                                            style="font-size:13px"><div class="_leads_status"><span
+                                            class="expire">Sale</span></div></center></span></span></b></div>
+                                    {% endif %}
+                                </td>
+
+                                <td class="action">
+                                    <a href="{% url 'delete_bookmark' property_id=p.property_id %}" class="delete"
+                                       style="color:red"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                            <!-- Item #2 -->
+                            <!--										<tr>-->
+                            <!--											<td class="dashboard_propert_wrapper">-->
+                            <!--												<img src="static/assets/img/p-3.png" alt="">-->
+                            <!--												<div class="title">-->
+                            <!--													<h4><a href="#">Oak Tree Villas</a></h4>-->
+                            <!--													<span>71 Lower River Dr. Bronx, NY</span>-->
+                            <!--													<span class="table-property-price">$535,000</span>-->
+                            <!--												</div>-->
+                            <!--											</td>-->
+                            <!--											<td class="action">-->
+                            <!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+                            <!--											</td>-->
+                            <!--										</tr>-->
+
+                            <!--										&lt;!&ndash; Item #3 &ndash;&gt;-->
+                            <!--										<tr>-->
+                            <!--											<td class="dashboard_propert_wrapper">-->
+                            <!--												<img src="static/assets/img/p-4.png" alt="">-->
+                            <!--												<div class="title">-->
+                            <!--													<h4><a href="#">Selway Villas</a></h4>-->
+                            <!--													<span>33 William St. Northbrook, IL </span>-->
+                            <!--													<span class="table-property-price">$420,000</span>-->
+                            <!--												</div>-->
+                            <!--											</td>-->
+                            <!--											<td class="action">-->
+                            <!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+                            <!--											</td>-->
+                            <!--										</tr>-->
+
+                            <!--										&lt;!&ndash; Item #4 &ndash;&gt;-->
+                            <!--										<tr>-->
+                            <!--											<td class="dashboard_propert_wrapper">-->
+                            <!--												<img src="static/assets/img/p-5.png" alt="">-->
+                            <!--												<div class="title">-->
+                            <!--													<h4><a href="#">Town Manchester</a></h4>-->
+                            <!--													<span> 7843 Durham Avenue, MD  </span>-->
+                            <!--													<span class="table-property-price">$420,000</span>-->
+                            <!--												</div>-->
+                            <!--											</td>-->
+                            <!--											<td class="action">-->
+                            <!--												<a href="#" class="delete"><i class="ti-close"></i> Delete</a>-->
+                            <!--											</td>-->
+                            <!--										</tr>-->
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 mt-4">
+                            <footer class="text-center">
+                                <p class="mb-0">© 2019 Rikada. Designd By <a href="https://themezhub.com/">Themez
+                                    Hub</a> All Rights Reserved</p>
+                            </footer>
+                        </div>
+                    </div>
+                    <!-- row -->
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- ============================ User Dashboard End ================================== -->
 
 {% endblock body %}

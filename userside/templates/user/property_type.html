@@ -270,19 +270,31 @@
 
                             <div class="listing-img-wrapper">
                                 <div class="_exlio_125">{{ i.property_status }}</div>
-                                <div class="list-img-slide">
-                                    <div class="click">
-                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-1.png"
-                                                                                   class="img-fluid mx-auto"
-                                                                                   alt=""/></a></div>
-                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-2.png"
-                                                                                   class="img-fluid mx-auto"
-                                                                                   alt=""/></a></div>
-                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-3.png"
-                                                                                   class="img-fluid mx-auto"
-                                                                                   alt=""/></a></div>
-                                    </div>
+<!--                                <div class="list-img-slide">-->
+<!--                                    <div class="click">-->
+<!--                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-1.png"-->
+<!--                                                                                   class="img-fluid mx-auto"-->
+<!--                                                                                   alt=""/></a></div>-->
+<!--                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-2.png"-->
+<!--                                                                                   class="img-fluid mx-auto"-->
+<!--                                                                                   alt=""/></a></div>-->
+<!--                                        <div><a href="single-property-1.html"><img src="static/assets/img/p-3.png"-->
+<!--                                                                                   class="img-fluid mx-auto"-->
+<!--                                                                                   alt=""/></a></div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+
+                            <div class="list-img-slide">
+                                <div class="click">
+                                    {%for photo in photo%}
+                                        {%if i.property_id == photo.property_id_id%}
+                                            <div><a href="#"><img src="{{photo.property_image_url.url}}"class="img-fluid mx-auto" alt=""/></a></div>
+                                        {% endif %}
+                                    {% endfor %}
+
                                 </div>
+                            </div>
+
                             </div>
 
 
@@ -300,7 +312,7 @@
                                     </div>
                                     <div class="_card_list_flex">
                                         <div class="_card_flex_01">
-                                            <h4 class="listing-name verified"><a href="single_property"
+                                            <h4 class="listing-name verified"><a href="/single_property/{{i.property_id}}"
                                                                                  class="prt-link-detail">{{ i.property_address }}, {{ i.property_city }}, {{ i.property_state }}, {{ i.property_zipcode }}</a></h4>
                                         </div>
                                     </div>

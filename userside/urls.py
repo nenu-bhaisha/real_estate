@@ -31,6 +31,7 @@ urlpatterns = [
 
     path('submit_property', views.submit_property, name='submit-property'),
     path('single_property/<int:p_id>', views.single_property, name='single-property'),
+    path('user_reviews/<int:property_id>', views.user_reviews, name="user_reviews"),
     #path('property_type/<str:property_status>', views.property_type, name='property-type'),
     #path('single_property', views.single_property, name='single-property'),
     # path('property_type/<int:p_type>', views.property_type, name='property-type'),
@@ -47,6 +48,7 @@ urlpatterns = [
     path('add_bookmark/<int:property_id>', views.add_bookmark, name="add_bookmark"),
     path('user_bookmark_list', views.user_bookmark_list, name='user-bookmark_list'),
     path('delete_bookmark/<int:property_id>', views.delete_bookmark, name="delete_bookmark"),
+
 
     path('about', views.about, name='about'),
     path('contact', views.contact, name='contact'),

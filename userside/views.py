@@ -22,7 +22,7 @@ from django.conf import settings
 def home(request):
     if request.method == "POST":
         to_email = request.POST.get('email')
-        subscribe.objects.create(subscribe_email=to_email)
+        # subscribe.objects.create(subscribe_email=to_email)
 
         try:
             send_mail(
@@ -39,7 +39,9 @@ def home(request):
             return HttpResponse('Unknown Error')
     else:
 
-        property_details = property.objects.all()
+        property_details = property.objects.raw(
+            'SELECT * FROM userside_property p , userside_property_rented_sold s where p.property_id<>s.property_rented_sold_property_id_id and p.property_is_publish=1;')
+
         p_id = property.objects.values_list('property_id')
         print('p_id', p_id)
 
@@ -50,11 +52,10 @@ def home(request):
         p_type = property.objects.raw(
             "select property_id,COUNT(*) from userside_property WHERE property_type = 'Apartment'")
 
-        #Agent Data
+        # Agent Data
         cursor = connection.cursor()
         cursor.execute("call AgentDataView()")
         agent = cursor.fetchall()
-
 
         data = {}
         data['property_details'] = property_details
@@ -141,26 +142,35 @@ def change_password(request):
 
 
 def change_password_view(request):
-    if request.user.is_authenticated:
-        if request.POST:
-            old_password = request.POST['old_password']
-            newPassword = request.POST['new_password']
-            newcPassword = request.POST['new_cpassword']
-            user = authenticate(request, user_name=request.user, password=old_password)
-            if user is not None:
-                user = user_details.objects.get(username=request.user.username)
-                user.set_password(newPassword)
-                user.is_visit = True
-                user.save()
-                messages.success(request, "Password Has Been Changed", extra_tags="warning")
-                return redirect("logout")
+    if request.method == "POST":
+        old_password = request.POST['old_password']
+        new_password = request.POST['new_password']
+        new_cpassword = request.POST['new_cpassword']
+        # Check Data is Avialable or not.
+        user_session = request.session.get('user_session')
+
+        try:
+            if old_password == "":
+                messages.error(request, "Please Enter old password !!")
+                return render(request, 'user/change-password.html')
+            if new_password == "":
+                messages.error(request, "Please Enter new password !!")
+                return render(request, 'user/change-password.html')
+            if new_cpassword == "":
+                messages.error(request, "Please Enter new confirm password !!")
+                return render(request, 'user/change-password.html')
+            elif new_cpassword != new_password:
+                messages.error(request, "Please Enter matching password !!")
+                return render(request, 'user/change-password.html')
             else:
-                return HttpResponse("Some thing went wrong")
-        else:
-            messages.success(request, "Password Is Invalid....", extra_tags="danger")
+                user = user_details.objects.get(user_id=user_session, user_password=old_password)
+                user.user_password = new_password
+                user.save()
+                messages.success(request, "Your password has been changed !!")
+                return render(request, 'user/change-password.html')
+        except ObjectDoesNotExist:
+            messages.error(request, "Please Enter old password correctly !!")
             return render(request, 'user/change-password.html')
-    else:
-        return render(request, 'user/change-password.html')
 
 
 def logout(request):
@@ -236,35 +246,56 @@ def submit_property(request):
 
 
 def single_property(request, p_id):
+
     property_details = property.objects.get(property_id=p_id)
+    review = user_review.objects.filter(user_review_property_id=p_id)
+    rcount = user_review.objects.filter(user_review_property_id=p_id).count()
+
     p_others = property.objects.raw(
         '''select property_id,property_others from userside_property where property_id = %s''', [p_id])
+
     for p in p_others:
         print(p.property_others)
     l_time = range(len(p_others))
-    print('------------------------------>', p_id)
+
     property_photo = property_image.objects.raw(
         'select property_image_id,property_image_url from userside_property_image where property_id_id = %s', [p_id])
     for p in property_photo:
         print(p.property_image_url)
-    """
-    for p in range(len(property_photo)):
-        pdata = property_photo[p] 
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',pdata) """
-    print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa', property_photo)
+
     data = {}
     data['property_details'] = property_details
     data['property_photo'] = property_photo
     data['p_others'] = p_others
     data['l_time'] = l_time
+    data['review'] = review
+    data['rcount'] = rcount
+
 
     return render(request, 'user/single-property.html', data)
+
+
+def user_reviews(request, property_id):
+    if request.method == 'POST':
+        if request.session.get('user_session'):
+            rmessage = request.POST.get('rmessage')
+            user_session = request.session.get('user_session')
+
+            user_review.objects.create(
+                user_review_message=rmessage,
+                user_review_property_id=property.objects.get(property_id=property_id),
+                user_review_user_id=user_details.objects.get(user_id=user_session)
+            )
+            return redirect("/home")
+            #return render(request, 'user/single-property.html', {"p_id": property_id})
+    return redirect("/home")
 
 
 def property_type(request):
     if request.method == 'POST':
         city_selected = request.POST.get('property_city_option')
         property_type_selected = request.POST.get('property_type_option')
+        photo = property_image.objects.all()
         print(f"city is {city_selected} and property type is {property_type_selected}")
         # pselected = property.objects.values_list('property_id', flat=True).filter(property_type=property_type_selected, property_city=city_selected)
         pselected = property.objects.filter(property_type=property_type_selected, property_city=city_selected)
@@ -272,7 +303,7 @@ def property_type(request):
         print(f"selected city is ->>>>{city_selected}  and {property_type_selected}")
         print(f"selected property is ->>>>{pselected}")
 
-    return render(request, 'user/property_type.html', {"pselected": pselected})
+    return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
 
 
 # def property_type(request, property_status):
@@ -281,7 +312,6 @@ def property_type(request):
 #     print('ffffffffffffffffffffffffffffffffffffffffff', p_id)
 #
 #     return render(request, 'user/property_type.html', {'property_details': property_details})
-
 
 # ========= AGENT ===========
 
@@ -349,51 +379,51 @@ def user_profile(request):
         uinstagram = request.POST['uinstagram']
         ulinkedin = request.POST['ulinkedin']
 
-        try:
-            if uname == "":
-                messages.error(request, "Please Enter Full name !!", extra_tags="warning")
-                return render(request, 'user/user_profile.html')
-            if uemail == "":
-                messages.error(request, "Please Enter EmailID !!", extra_tags="warning")
-                return render(request, 'user/user_profile.html')
-            if ucontact == "":
-                messages.error(request, "Please Enter Contact Number !!", extra_tags="warning")
-                return render(request, 'user/user_profile.html')
-            else:
-                user = user_details.objects.get(user_id=user_session)
-                user.user_name = uname
-                user.user_email = uemail
-                user.user_title = utitle
-                user.user_contact = ucontact
-                user.user_address = uaddress
-                user.user_city = ucity
-                user.user_state = ustate
-                user.user_zipcode = uzipcode
-                user.user_about = uabout
-                user.user_facebook = ufacebook
-                user.user_twitter = utwitter
-                user.user_instagram = uinstagram
-                user.user_linkedin = ulinkedin
-                user.save()
-                messages.success(request, "Your Profile has been updated !!", extra_tags="success")
-                return render(request, "user/user_profile.html", {"user": user})
-        except:
-            return HttpResponse("404")
+        if uname == "":
+            messages.error(request, "Please Enter Full name !!", extra_tags="warning")
+            return render(request, 'user/user_profile.html')
+        if uemail == "":
+            messages.error(request, "Please Enter EmailID !!", extra_tags="warning")
+            return render(request, 'user/user_profile.html')
+        if ucontact == "":
+            messages.error(request, "Please Enter Contact Number !!", extra_tags="warning")
+            return render(request, 'user/user_profile.html')
+        else:
+            user = user_details.objects.get(user_id=user_session)
+            user.user_name = uname
+            user.user_email = uemail
+            user.user_title = utitle
+            user.user_contact = ucontact
+            user.user_address = uaddress
+            user.user_city = ucity
+            user.user_state = ustate
+            user.user_zipcode = uzipcode
+            user.user_about = uabout
+            user.user_facebook = ufacebook
+            user.user_twitter = utwitter
+            user.user_instagram = uinstagram
+            user.user_linkedin = ulinkedin
+            user.save()
+            messages.success(request, "Your Profile has been updated !!", extra_tags="warning")
+            return render(request, "user/user_profile.html", {"user": user})
+
     else:
         user = user_details.objects.get(user_id=user_session)
         return render(request, "user/user_profile.html", {"user": user})
+
     # return render(request, 'user/user_profile.html')
 
 
 def user_property(request):
     user_session = request.session.get('user_session')
     property_info = property.objects.filter(property_user_id=user_session)
-    property_img = property_image.objects.all()
+    photo = property_image.objects.all()
     property_sold = property_rented_sold.objects.all()
     print(property_sold)
     # return render(request, "user/user_property.html",
     #             {"property_info": property_info, "property_img": property_img, "property_sold": property_sold})
-    return render(request, 'user/user_property.html', {"property_info": property_info, "property_sold": property_sold})
+    return render(request, 'user/user_property.html',
+                  {"property_info": property_info, "property_sold": property_sold, "photo": photo})
 
 
 def edit_property(request, property_id):
@@ -484,7 +514,8 @@ def edit_property_view(request):
 
 def view_property(request, property_id):
     property1 = property.objects.get(property_id=property_id)
-    return render(request, "user/view_property.html", {"property1": property1})
+    property_photo = property_image.objects.filter(property_id=property_id)
+    return render(request, "user/view_property.html", {"property1": property1, "property_photo": property_photo})
 
 
 def delete_property(request, property_id):
@@ -498,24 +529,30 @@ def user_bookmark_list(request):
     user_session = request.session.get('user_session')
     bookmark = bookmarked_property.objects.filter(bookmarked_property_user_id=user_session)
     property_info = property.objects.all()
-    property_img = property_image.objects.all()
+    photo = property_image.objects.all()
 
     return render(request, 'user/user_bookmark-list.html',
-                  {"property_info": property_info, "bookmark": bookmark, "property_img": property_img})
+                  {"property_info": property_info, "bookmark": bookmark, "photo": photo})
 
 
 # return render(request, 'user/user_bookmark-list.html')
 
 def add_bookmark(request, property_id):
     user_session = request.session.get('user_session')
-    #bookmark = bookmarked_property(bookmarked_property_property_id=property_id,
-     #                              bookmarked_property_user_id=user_session)
+    add = bookmarked_property.objects.filter(bookmarked_property_property_id=property.objects.get(property_id=property_id),bookmarked_property_user_id=user_details.objects.get(user_id=user_session))
+
+    if not add:
+        bookmarked_property.objects.create(
+            bookmarked_property_property_id=property.objects.get(property_id=property_id),
+            bookmarked_property_user_id=user_details.objects.get(user_id=user_session)
+        )
+        messages.success(request, "Bookmarked Successfully !!")
+    else:
+        messages.warning(request, "Already Bookmarked !!")
 
 
-    bookmarked_property.objects.create(bookmarked_property_property_id=property_id, bookmarked_property_user_id=user_session)
-    bookmarked_property.save()
-    # return redirect("user-bookmark_list")
-    return render(request, 'user/user_bookmark-list.html')
+    return redirect("user-bookmark_list")
+    #return render(request, 'user/user_bookmark-list.html')
 
 
 def delete_bookmark(request, property_id):
@@ -523,6 +560,7 @@ def delete_bookmark(request, property_id):
     bookmark = bookmarked_property.objects.filter(bookmarked_property_user_id=user_session,
                                                   bookmarked_property_property_id=property_id)
     bookmark.delete()
+    messages.success(request, "Bookmarked Removed !!")
     return redirect("user-bookmark_list")
 
 
@@ -541,7 +579,7 @@ def contact(request):
         contact_Email = request.POST.get('contact_Email')
         contact_Subject = request.POST.get('contact_Subject')
         contact_Message = request.POST.get('contact_Message')
-        print("Coneatasdfasdfasd",contact_Email)
+        print("Coneatasdfasdfasd", contact_Email)
         contact_us.objects.create(contact_name=contact_Name, contact_email=contact_Email, contact_contact=0,
                                   contact_subject=contact_Subject, contact_message=contact_Message)
 

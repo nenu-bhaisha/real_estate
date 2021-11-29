@@ -14,6 +14,7 @@
         {% if request.session.user_name %}
             <li><a href="#">User<span class="submenu-indicator"></span></a>
                 <ul class="nav-dropdown nav-submenu">
+                    <li><a href="/user_profile">Welcome, {{ request.session.user_name }}</a></li>
                     <li><a href="/user_dashboard">User Dashboard</a></li>
                     <li><a href="/user_profile">My Profile</a></li>
                     <li><a href="/user_property">My Property</a></li>
@@ -40,7 +41,7 @@
     <ul class="nav-menu nav-menu-social align-to-right">
         {% if request.session.user_session %}
 
-            <li><h4 class="color--googleplus">Welcome {{ request.session.user_name }}</h4></li>
+<!--            <li><h4 class="color&#45;&#45;googleplus">Welcome {{ request.session.user_name }}</h4></li>-->
             <li>
                 <a href="/logout" class="alio_green">
                     <i class="fas fa-sign-out-alt mr-1"></i><span class="dn-lg">Sign Out</span>
