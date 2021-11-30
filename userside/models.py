@@ -21,7 +21,7 @@ class user_details(models.Model):
     user_name = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_email = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_contact = models.IntegerField()  # int(10) NOT NULL
-    user_image = models.CharField(max_length=200)  # varchar(100) NOT NULL
+    user_image = models.ImageField(upload_to='User_Profile_Image',null=True)  # varchar(100) NOT NULL
     user_password = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_is_active = models.BooleanField(default=False)  # tinyint(1) NOT NULL
     user_title = models.CharField(max_length=200, null=True)

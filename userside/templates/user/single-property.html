@@ -1,61 +1,21 @@
 {% extends 'user/base.html' %}
 {% block title %} Property Details {% endblock title %}
 {% block body %}
+
 	<!-- ============================ Hero Banner  Start================================== -->
-	<!-- Gallery Part Start -->
-<!--		{%for p in property_photo%}-->
-<!--		<section class="gallery_parts pt-2 pb-2 d-none d-sm-none d-md-none d-lg-none d-xl-block">-->
-<!--			<div class="container">-->
-<!--				<div class="row align-items-center">-->
-<!--					<div class="col-lg-7 col-md-8 col-sm-12 pr-1">-->
-<!--						<div class="gg_single_part left">-->
-<!--							<a href="{{p.property_image_url.url}}" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a>-->
-<!--						</div>-->
-<!--					</div>-->
-<!--&lt;!&ndash;					<div class="col-lg-8 col-md-7 col-sm-12 pr-1">&ndash;&gt;-->
-<!--&lt;!&ndash;						<div class="gg_single_part left"><a href="/static/assets/img/p-2.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
-<!--&lt;!&ndash;					</div>&ndash;&gt;-->
-<!--&lt;!&ndash;					<div class="col-lg-4 col-md-5 col-sm-12 pl-1">&ndash;&gt;-->
-<!--&lt;!&ndash;						<div class="gg_single_part-right min"><a href="/static/assets/img/p-5.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
-<!--&lt;!&ndash;						<div class="gg_single_part-right min mt-2 mb-2"><a href="static/assets/img/p-3.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
-<!--&lt;!&ndash;						<div class="gg_single_part-right min"><a href="/static/assets/img/p-4.png" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>&ndash;&gt;-->
-<!--&lt;!&ndash;					</div>&ndash;&gt;-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</section>-->
-
-<!--		<div class="featured_slick_gallery gray d-block d-md-block d-lg-block d-xl-none">-->
-<!--			<div class="featured_slick_gallery-slide">-->
-<!--				<div class="featured_slick_padd"><a href="./../../static/assets/img/slider-3.jpg" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
-<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
-<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
-<!--				<div class="featured_slick_padd"><a href="#" class="mfp-gallery"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" /></a></div>-->
-
-<!--			</div>-->
-<!--		</div>-->
-<!--		{%endfor%}-->
-
-	<!-- ============================ Hero Banner End ================================== -->
-
-
-<!-- ============================ Hero Banner  Start================================== -->
-			<div class="home-slider margin-bottom-0">
-
-				<!-- Slide -->
-				{%for p in property_photo%}
-<!--					<div data-background-image="{{p.property_image_url.url}}" class="item">-->
-<!--				</div>-->
+		<div class="home-slider margin-bottom-0">
+			<!-- Slide -->
+			{%for p in property_photo%}
 				<a href="{{p.property_image_url.url}}" class="mfp-gallery" id="slider"><img src="{{p.property_image_url.url}}" class="img-fluid mx-auto" alt="" width="80%" /></a>
-				{% endfor %}
-			</div>
-			<!-- ============================ Hero Banner End ================================== -->
+			{% endfor %}
+		</div>
+	<!-- ============================ Hero Banner End ================================== -->
 
 
 	<!-- ============================ Property Detail Start ================================== -->
 		<section class="gray">
 			<div class="container">
 				<div class="row">
-
 					<!-- property main detail -->
 					<div class="col-lg-8 col-md-12 col-sm-12">
 
@@ -201,7 +161,7 @@
 												<li class="article_comments_wrap">
 												<article>
 													<div class="article_comments_thumb">
-														<img src="/static/assets/img/team-4.jpg" alt="">
+														<img src="/media/{{ r.user_review_user_id.user_image }}" alt="">
 													</div>
 													<div class="comment-details">
 														<div class="comment-meta">
@@ -225,48 +185,29 @@
 
 						<!-- Single Write a Review -->
 						<div class="_prtis_list mb-4">
-
 							<div class="_prtis_list_header min">
 								<h4 class="m-0">Write a <span class="theme-cl">Review</span></h4>
 							</div>
-						<form id="review_form" method="post" action="{% url 'user_reviews' property_id=property_details.property_id %}">
-							{% csrf_token %}
-							<div class="_prtis_list_body">
-								<div class="row">
+							<form id="review_form" method="post" action="{% url 'user_reviews' property_id=property_details.property_id %}">
+								{% csrf_token %}
+								<div class="_prtis_list_body">
+									<div class="row">
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">
+												<label>Messages</label>
+												<textarea class="form-control ht-80" name="rmessage" id="message" ></textarea>
+											</div>
+										</div>
 
-<!--									<div class="col-lg-6 col-md-6 col-sm-12">-->
-<!--										<div class="form-group">-->
-<!--											<label>Name</label>-->
-<!--											<input type="text" class="form-control" name="name" id="name" />-->
-<!--										</div>-->
-<!--									</div>-->
-
-<!--									<div class="col-lg-6 col-md-6 col-sm-12">-->
-<!--										<div class="form-group">-->
-<!--											<label>Email ID</label>-->
-<!--											<input type="email" class="form-control"name="email" id="email" />-->
-<!--										</div>-->
-<!--									</div>-->
-
-									<div class="col-lg-12 col-md-12 col-sm-12">
-										<div class="form-group">
-											<label>Messages</label>
-											<textarea class="form-control ht-80" name="rmessage" id="message" ></textarea>
+										<div class="col-lg-12 col-md-12 col-sm-12">
+											<div class="form-group">												
+												<input type="submit" name="submit" id="email" value="Submit Review" class="btn theme-bg rounded" />
+											</div>
 										</div>
 									</div>
-
-									<div class="col-lg-12 col-md-12 col-sm-12">
-										<div class="form-group">
-<!--											<button class="btn theme-bg rounded" type="submit">Submit Review</button>-->
-											<input type="submit" name="submit" id="email" value="Submit Review" class="btn theme-bg rounded" />
-										</div>
-									</div>
-
 								</div>
-							</div>
 							</form>
 						</div>
-
 					</div>
 
 					<!-- property Sidebar -->

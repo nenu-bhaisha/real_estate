@@ -12,6 +12,8 @@ from django.views.generic import TemplateView
 from .models import *
 from .models import user_details, property, property_image, subscribe, agent_data, bookmarked_property
 from django.db import connection
+import os
+import os.path
 
 # Create your views here.
 from django.urls import reverse
@@ -160,7 +162,7 @@ def change_password_view(request):
                 messages.error(request, "Please Enter new confirm password !!")
                 return render(request, 'user/change-password.html')
             elif new_cpassword != new_password:
-                messages.error(request, "Please Enter matching password !!")
+                messages.error(request, "Password not Match !!")
                 return render(request, 'user/change-password.html')
             else:
                 user = user_details.objects.get(user_id=user_session, user_password=old_password)
@@ -347,23 +349,26 @@ def user_dashboard(request):
     labels = []
     data = []
 
+    pbcount = bookmarked_property.objects.filter(bookmarked_property_user_id_id=user_session).count()
+    user = user_details.objects.get(user_id=user_session) 
+    
     queryset = property.objects.order_by('-property_id')
     for city in queryset:
         labels.append(property.property_added_date)
         data.append(property.property_is_publish)
 
-    # return redirect( 'user/', {
-    #    'labels': labels,
-    #    'data': data,
-    # })
     return render(request, 'user/user_dashboard.html', {
         'labels': labels,
         'data': data,
+        "user":user,
+        "pbcount":pbcount
     })
 
 
 def user_profile(request):
     user_session = request.session.get('user_session')
+    pbcount = bookmarked_property.objects.filter(bookmarked_property_user_id_id=user_session).count()
+
     if request.method == "POST":
         uname = request.POST['uname']
         uemail = request.POST['uemail']
@@ -378,15 +383,15 @@ def user_profile(request):
         utwitter = request.POST['utwitter']
         uinstagram = request.POST['uinstagram']
         ulinkedin = request.POST['ulinkedin']
-
+                
         if uname == "":
-            messages.error(request, "Please Enter Full name !!", extra_tags="warning")
+            messages.error(request, "Please Enter Full name !!")
             return render(request, 'user/user_profile.html')
         if uemail == "":
-            messages.error(request, "Please Enter EmailID !!", extra_tags="warning")
+            messages.error(request, "Please Enter EmailID !!")
             return render(request, 'user/user_profile.html')
         if ucontact == "":
-            messages.error(request, "Please Enter Contact Number !!", extra_tags="warning")
+            messages.error(request, "Please Enter Contact Number !!")
             return render(request, 'user/user_profile.html')
         else:
             user = user_details.objects.get(user_id=user_session)
@@ -403,15 +408,21 @@ def user_profile(request):
             user.user_twitter = utwitter
             user.user_instagram = uinstagram
             user.user_linkedin = ulinkedin
+            
+            if len(request.FILES) != 0:
+                # if len(user.user_image) > 0:
+                    # os.remove(user.user_image.path)
+                user.user_image = request.FILES.get('change_image')
+
             user.save()
-            messages.success(request, "Your Profile has been updated !!", extra_tags="warning")
+            messages.success(request, "Your Profile has been updated !!")
             return render(request, "user/user_profile.html", {"user": user})
 
     else:
         user = user_details.objects.get(user_id=user_session)
-        return render(request, "user/user_profile.html", {"user": user})
+        return render(request, "user/user_profile.html", {"user": user,"pbcount":pbcount})
 
-    # return render(request, 'user/user_profile.html')
+    return render(request, 'user/user_profile.html')
 
 
 def user_property(request):
@@ -419,11 +430,13 @@ def user_property(request):
     property_info = property.objects.filter(property_user_id=user_session)
     photo = property_image.objects.all()
     property_sold = property_rented_sold.objects.all()
-    print(property_sold)
-    # return render(request, "user/user_property.html",
-    #             {"property_info": property_info, "property_img": property_img, "property_sold": property_sold})
+    
+    pbcount = bookmarked_property.objects.filter(bookmarked_property_user_id_id=user_session).count()
+    user = user_details.objects.get(user_id=user_session)    
+
+    
     return render(request, 'user/user_property.html',
-                  {"property_info": property_info, "property_sold": property_sold, "photo": photo})
+                  {"property_info": property_info, "property_sold": property_sold, "photo": photo,"user":user,"pbcount":pbcount})
 
 
 def edit_property(request, property_id):
@@ -505,10 +518,10 @@ def edit_property_view(request):
                 property1.property_description = property_description
                 property1.property_is_publish = property_is_publish
                 property1.save()
-                messages.error(request, "Your property has been updateded !!", extra_tags="warning")
+                messages.success(request, "Your property has been updateded !!")
                 return redirect("user-property")
         except ObjectDoesNotExist:
-            messages.error(request, "Please Enter old password correctly !!", extra_tags="warning")
+            messages.error(request, "Please Enter old password correctly !!")
             return redirect("user-property")
 
 
@@ -531,11 +544,11 @@ def user_bookmark_list(request):
     property_info = property.objects.all()
     photo = property_image.objects.all()
 
+    pbcount = bookmarked_property.objects.filter(bookmarked_property_user_id_id=user_session).count()
+    user = user_details.objects.get(user_id=user_session)    
+
     return render(request, 'user/user_bookmark-list.html',
-                  {"property_info": property_info, "bookmark": bookmark, "photo": photo})
-
-
-# return render(request, 'user/user_bookmark-list.html')
+                  {"property_info": property_info, "bookmark": bookmark, "photo": photo,"user":user,"pbcount":pbcount})
 
 def add_bookmark(request, property_id):
     user_session = request.session.get('user_session')
@@ -554,7 +567,6 @@ def add_bookmark(request, property_id):
     return redirect("user-bookmark_list")
     #return render(request, 'user/user_bookmark-list.html')
 
-
 def delete_bookmark(request, property_id):
     user_session = request.session.get('user_session')
     bookmark = bookmarked_property.objects.filter(bookmarked_property_user_id=user_session,
@@ -562,7 +574,6 @@ def delete_bookmark(request, property_id):
     bookmark.delete()
     messages.success(request, "Bookmarked Removed !!")
     return redirect("user-bookmark_list")
-
 
 # ====== OTHERS ====================
 
