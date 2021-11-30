@@ -772,7 +772,7 @@
                 <div class="col-lg col-md-4">
                     <!-- Single Category -->
                     <div class="property_cats_boxs">
-                        <a href="grid-layout-with-sidebar.html" class="category-box">
+                        <a href="{% url 'property_type2' property_type='Houses' %}" class="category-box">
                             <div class="property_category_short">
                                 <div class="category-icon clip-1">
                                     <i class="flaticon-beach-house-2"></i>
@@ -780,7 +780,6 @@
 
                                 <div class="property_category_expand property_category_short-text">
                                     <h4>Family House</h4>
-                                    <p>122 Property</p>
                                 </div>
                             </div>
                         </a>
@@ -790,15 +789,14 @@
                 <div class="col-lg col-md-4">
                     <!-- Single Category -->
                     <div class="property_cats_boxs">
-                        <a href="grid-layout-with-sidebar.html" class="category-box">
+                        <a href="{% url 'property_type2' property_type='Villas' %}" class="category-box">
                             <div class="property_category_short">
                                 <div class="category-icon clip-2">
                                     <i class="flaticon-cabin"></i>
                                 </div>
 
                                 <div class="property_category_expand property_category_short-text">
-                                    <h4>House & Villa</h4>
-                                    <p>155 Property</p>
+                                    <h4>Villa</h4>
                                 </div>
                             </div>
                         </a>
@@ -808,7 +806,7 @@
                 <div class="col-lg col-md-4">
                     <!-- Single Category -->
                     <div class="property_cats_boxs">
-                        <a href="grid-layout-with-sidebar.html" class="category-box">
+                        <a href="{% url 'property_type2' property_type='Apartment' %}" class="category-box">
                             <div class="property_category_short">
                                 <div class="category-icon clip-3">
                                     <i class="flaticon-apartments"></i>
@@ -816,7 +814,6 @@
 
                                 <div class="property_category_expand property_category_short-text">
                                     <h4>Apartment</h4>
-                                    <p>300 Property</p>
                                 </div>
                             </div>
                         </a>
@@ -826,15 +823,14 @@
                 <div class="col-lg col-md-4">
                     <!-- Single Category -->
                     <div class="property_cats_boxs">
-                        <a href="grid-layout-with-sidebar.html" class="category-box">
+                        <a href="{% url 'property_type2' property_type='Offices' %}" class="category-box">
                             <div class="property_category_short">
                                 <div class="category-icon clip-4">
                                     <i class="flaticon-student-housing"></i>
                                 </div>
 
                                 <div class="property_category_expand property_category_short-text">
-                                    <h4>Office & Studio</h4>
-                                    <p>80 Property</p>
+                                    <h4>Office</h4>
                                 </div>
                             </div>
                         </a>
@@ -844,15 +840,14 @@
                 <div class="col-lg col-md-4">
                     <!-- Single Category -->
                     <div class="property_cats_boxs">
-                        <a href="grid-layout-with-sidebar.html" class="category-box">
+                        <a href="{% url 'property_type2' property_type='Garage' %}" class="category-box">
                             <div class="property_category_short">
                                 <div class="category-icon clip-5">
                                     <i class="flaticon-modern-house-4"></i>
                                 </div>
 
                                 <div class="property_category_expand property_category_short-text">
-                                    <h4>Villa & Condo</h4>
-                                    <p>80 Property</p>
+                                    <h4>Garage</h4>
                                 </div>
                             </div>
                         </a>
@@ -911,8 +906,7 @@
                             <div class="listing-short-detail-wrap">
                                 <div class="_card_list_flex mb-2">
                                     <div class="_card_flex_01">
-                                        <span class="_list_blickes _netork">6 Network</span>
-                                        <span class="_list_blickes types">Family</span>
+                                        <span class="_list_blickes _netork">{{property.property_title}}</span>
                                     </div>
                                     <div class="_card_flex_last">
                                         <div class="prt_saveed_12lk">
@@ -999,39 +993,37 @@
                         <!-- Single Item -->
                         {% if agent_data %}
                             {% for agent in agent_data %}
-                                <div class="single_items">
-                                    <div class="grid_agents">
-                                        <div class="elio_mx_list theme-bg-2">72 Listings</div>
-                                        <div class="grid_agents-wrap">
+                                <div class="col-lg-4 col-md-6 col-sm-12">
+									<div class="grid_agents">
+										<div class="elio_mx_list theme-bg-2">{{agent.13}} Listings</div>
+										<div class="grid_agents-wrap">
 
-                                            <div class="fr-grid-thumb">
-                                                <a href="agent-page.html">
-                                                    <span class="verified"><img src="/static/assets/img/verified.svg"
-                                                                                        class="verify mx-auto" alt=""></span>
-                                                    <img src="/media/{{agent.4}}" class="img-fluid mx-auto" alt="">
-                                                                </a>
-                                            </div>
+											<div class="fr-grid-thumb">
+												<a href="{% url 'agent-details' id=agent.2 %}">
+													<span class="verified"><img src="static/assets/img/verified.svg" class="verify mx-auto" alt=""></span>
+													<img src="static/assets/img/team-1.jpg" class="img-fluid mx-auto" alt="">
+												</a>
+											</div>
 
-                                            <div class="fr-grid-deatil">
-                                                <span><i class="ti-location-pin mr-1"></i>{{agent.5}}, {{agent.6}}</span>
-                                                <h5 class="fr-can-name"><a href="{% url 'agent-details' id=agent.0%}">{{agent.1}}</a></h5>
-                                                <ul class="inline_social">
-                                                    <li><a href="{{agent.7}}" class="fb"><i class="ti-facebook"></i></a></li>
-                                                    <li><a href="{{agent.9}}" class="ln"><i class="ti-linkedin"></i></a></li>
-                                                    <li><a href="{{agent.8}}" class="ins"><i class="ti-instagram"></i></a></li>
-                                                    <li><a href="{{agent.10}}" class="tw"><i class="ti-twitter"></i></a></li>
-                                                </ul>
-                                            </div>
+											<div class="fr-grid-deatil">
 
-                                            <div class="fr-infos-deatil">
-                                                <a href="mailto:{{agent.2}}" class="btn agent-btn theme-bg"><i class="fa fa-envelope mr-2"></i>Message</a>
-                                                <a href="tel:{{agent.3}}" class="btn agent-btn theme-black"><i class="fa fa-phone"></i></a>
-                                            </div>
+												<h5 class="fr-can-name"><a href="{% url 'agent-details' id=agent.2 %}">{{agent.3}}</a></h5>
+												<ul class="inline_social">
+													<li><a href="{{agent.9}}" class="fb"><i class="ti-facebook"></i></a></li>
+													<li><a href="{{agent.11}}" class="ln"><i class="ti-linkedin"></i></a></li>
+													<li><a href="{{agent.10}}" class="ins"><i class="ti-instagram"></i></a></li>
+													<li><a href="{{agent.12}}" class="tw"><i class="ti-twitter"></i></a></li>
+												</ul>
+											</div>
 
-                                        </div>
-
-                                    </div>
-                                </div>
+											<div class="fr-infos-deatil">
+												{% comment %} <a href="#"  data-toggle="modal" data-target="#autho-message" class="btn agent-btn theme-bg"><i class="fa fa-envelope mr-2"></i>Message</a> {% endcomment %}
+												<a href="mailto:{{agent.3}}" class="btn agent-btn theme-bg"><i class="fa fa-envelope mr-2"></i>Message</a>
+												<a href="tel:{{agent.4}}" class="btn agent-btn theme-black"><i class="fa fa-phone"></i></a>
+											</div>
+										</div>
+									</div>
+								</div>
                             {% endfor %}
                         {% endif %}
                     </div>

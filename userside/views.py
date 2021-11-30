@@ -248,7 +248,6 @@ def submit_property(request):
 
 
 def single_property(request, p_id):
-
     property_details = property.objects.get(property_id=p_id)
     review = user_review.objects.filter(user_review_property_id=p_id)
     rcount = user_review.objects.filter(user_review_property_id=p_id).count()
@@ -273,7 +272,6 @@ def single_property(request, p_id):
     data['review'] = review
     data['rcount'] = rcount
 
-
     return render(request, 'user/single-property.html', data)
 
 
@@ -289,7 +287,7 @@ def user_reviews(request, property_id):
                 user_review_user_id=user_details.objects.get(user_id=user_session)
             )
             return redirect("/home")
-            #return render(request, 'user/single-property.html', {"p_id": property_id})
+            # return render(request, 'user/single-property.html', {"p_id": property_id})
     return redirect("/home")
 
 
@@ -304,16 +302,65 @@ def property_type(request):
         # p = property.objects.filter(property_id=i)
         print(f"selected city is ->>>>{city_selected}  and {property_type_selected}")
         print(f"selected property is ->>>>{pselected}")
-
     return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
 
 
-# def property_type(request, property_status):
-#     property_details = property.objects.filter(property_status=property_status)
-#     p_id = property.objects.filter(property_status=property_status).values_list('property_id')
-#     print('ffffffffffffffffffffffffffffffffffffffffff', p_id)
-#
-#     return render(request, 'user/property_type.html', {'property_details': property_details})
+def property_type1(request, property_status):
+    pselected = property.objects.filter(property_status=property_status)
+    photo = property_image.objects.all()
+    print(f"Pseleceted {pselected} and {photo}--------")
+    # return ('/property_type', {"pselected": pselected, "photo": photo})
+    return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
+
+def property_type2(request, property_type):
+    pselected = property.objects.filter(property_type=property_type)
+    photo = property_image.objects.all()
+    print(f"Pseleceted {pselected} and {photo}--------")
+    # return ('/property_type', {"pselected": pselected, "photo": photo})
+    return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
+
+def property_type_filter(request):
+    if request.method == 'POST':
+        ptype = request.POST.get('ptype')
+        status = request.POST.get('status')
+        price = request.POST.get('price')
+        bedrooms = request.POST.get('bedrooms')
+        bathrooms = request.POST.get('bathrooms')
+        min_area = request.POST.get('min_area')
+        max_area = request.POST.get('max_area')
+        photo = property_image.objects.all()
+
+        if price == 1:
+            pselected = property.objects.filter(property_type=ptype, property_status=status,
+                                                property_price__range=(0, 10000), property_bedrooms=bedrooms,
+                                                property_bathrooms=bathrooms,
+                                                property_sqft_area__range=(min_area, max_area))
+        elif price == 2:
+            pselected = property.objects.filter(property_type=ptype, property_status=status,
+                                                property_price__range=(10000, 100000), property_bedrooms=bedrooms,
+                                                property_bathrooms=bathrooms,
+                                                property_sqft_area__range=(min_area, max_area))
+        elif price == 3:
+            pselected = property.objects.filter(property_type=ptype, property_status=status,
+                                                property_price__range=(100000, 500000), property_bedrooms=bedrooms,
+                                                property_bathrooms=bathrooms,
+                                                property_sqft_area__range=(min_area, max_area))
+        elif price == 4:
+            pselected = property.objects.filter(property_type=ptype, property_status=status,
+                                                property_price__range=(500000, 5000000), property_bedrooms=bedrooms,
+                                                property_bathrooms=bathrooms,
+                                                property_sqft_area__range=(min_area, max_area))
+        else:
+            pselected = property.objects.filter(property_type=ptype, property_status=status,
+                                                property_price__range=(5000000, 50000000000),
+                                                property_bedrooms=bedrooms,
+                                                property_bathrooms=bathrooms,
+                                                property_sqft_area__range=(min_area, max_area))
+
+        print(f"========================================selected property is ->>>>{pselected}")
+    return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
+    # return render(request, '/user/property_type.html', {"pselected": pselected, "photo": photo})
+
 
 # ========= AGENT ===========
 
@@ -322,15 +369,16 @@ def agent(request):
     # AgenyDataView() is Procedure Name. it is create in phpMyAdmin
     cursor.execute("call AgentDataView()")
     agent = cursor.fetchall()
-
-    # Count
-
-    return render(request, "user/agents.html", {"agent_data": agent})
+    # agent = property.objects.raw('''SELECT p.property_id, p.property_user_id_id, count(p.property_id) as c, u.user_id, u.user_name, u.user_email, u.user_contact, u.user_image, u.user_city, u.user_state, u.user_facebook, u.user_instagram, u.user_linkedin, u.user_twitter FROM `userside_user_details` u, `userside_property` p where u.user_id = p.property_user_id_id group by p.property_user_id_id''')
+    return render(request, 'user/agents.html', {"agent_data": agent})
 
 
 def agent_details(request, id):
     agent_detail = user_details.objects.get(user_id=id)
-    return render(request, 'user/agent-page.html', {"agent": agent_detail})
+    property_details = property.objects.raw(
+        'SELECT * FROM userside_property p , userside_property_rented_sold s where p.property_id<>s.property_rented_sold_property_id_id and p.property_is_publish=1;')
+    photo = property_image.objects.all()
+    return render(request, 'user/agent-page.html', {"agent": agent_detail,"property_details":property_details,"photo":photo})
 
 
 # ========== USER ===========
@@ -552,7 +600,9 @@ def user_bookmark_list(request):
 
 def add_bookmark(request, property_id):
     user_session = request.session.get('user_session')
-    add = bookmarked_property.objects.filter(bookmarked_property_property_id=property.objects.get(property_id=property_id),bookmarked_property_user_id=user_details.objects.get(user_id=user_session))
+    add = bookmarked_property.objects.filter(
+        bookmarked_property_property_id=property.objects.get(property_id=property_id),
+        bookmarked_property_user_id=user_details.objects.get(user_id=user_session))
 
     if not add:
         bookmarked_property.objects.create(
@@ -563,9 +613,8 @@ def add_bookmark(request, property_id):
     else:
         messages.warning(request, "Already Bookmarked !!")
 
-
     return redirect("user-bookmark_list")
-    #return render(request, 'user/user_bookmark-list.html')
+    # return render(request, 'user/user_bookmark-list.html')
 
 def delete_bookmark(request, property_id):
     user_session = request.session.get('user_session')
