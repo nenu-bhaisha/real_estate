@@ -119,10 +119,8 @@ class user_review(models.Model):
 #Procedure for agent data
 
 class agent_data(models.Model):
-    p_count = models.IntegerField()
     user_id = models.CharField(max_length=10)           #0
-    user_name = models.CharField(max_length=200)
-    user_name = models.CharField(max_length=200) #1
+    user_name = models.CharField(max_length=200)        #1
     user_email = models.CharField(max_length=200)       #2
     user_contact = models.IntegerField()                #3
     user_image = models.CharField(max_length=200)       #4
@@ -132,3 +130,4 @@ class agent_data(models.Model):
     user_twitter = models.CharField(max_length=200)     #8
     user_instagram = models.CharField(max_length=200)   #9
     user_linkedin = models.CharField(max_length=200)    #10
+    p_count = models.IntegerField(null=True)            #11

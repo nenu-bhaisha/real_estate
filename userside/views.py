@@ -22,35 +22,43 @@ from django.conf import settings
 
 # ============  home view ==========================
 def home(request):
+            
+    #------------Subscription maill-------------------
     if request.method == "POST":
         to_email = request.POST.get('email')
-        # subscribe.objects.create(subscribe_email=to_email)
+        mail_has = subscribe.objects.filter(subscribe_email=to_email).count()
+        
+        if mail_has==0 :
+            subscribe.objects.create(subscribe_email=to_email)
 
-        try:
-            send_mail(
-                'Subscription Successfully',
-                'You have subscription In.',
-                settings.EMAIL_HOST_USER,
-                [to_email],
-                fail_silently=False)
-            messages.success(request, "Your subscription successfull...")
-
-        except SMTPException:
-            return HttpResponse('SMTP Error')
-        except:
-            return HttpResponse('Unknown Error')
+            try:
+                send_mail(
+                    'Subscription Successfully',
+                    'You have subscription In.',
+                    settings.EMAIL_HOST_USER,
+                    [to_email],
+                    fail_silently=False)
+                messages.success(request, "Your subscription successfull...")
+                return render(request, 'user/home.html')
+            except SMTPException:
+                return HttpResponse('SMTP Error')
+            except:
+                return HttpResponse('Unknown Error')
+        else:
+            print('You alreday subscript !!')
+            messages.warning(request, "You alreday subscript !!")
+            return render(request, 'user/home.html')
     else:
-
+        #------------------ Fetch Home Data--------------------
         property_details = property.objects.raw(
             'SELECT * FROM userside_property p , userside_property_rented_sold s where p.property_id<>s.property_rented_sold_property_id_id and p.property_is_publish=1;')
 
         p_id = property.objects.values_list('property_id')
         print('p_id', p_id)
 
-        # photo = property_image.objects.raw('select property_image_id,property_image_url from userside_property_image where property_id_id = 18')
+        #Property_Image Data
         photo = property_image.objects.all()
 
-        # p_image_id = property_image.objects.raw('select property_image_id,property_id_id from userside_property_image')
         p_type = property.objects.raw(
             "select property_id,COUNT(*) from userside_property WHERE property_type = 'Apartment'")
 
@@ -71,9 +79,7 @@ def home(request):
         data['agent_data'] = agent
 
         return render(request, 'user/home.html', data)
-        # return render(request, 'user/home.html', {"data": data, "city_passed": city, "property_passed": p_type})
-
-
+        
 # ========= AUTHENTICATION ========
 def register(request):
     if request.POST:
@@ -122,7 +128,6 @@ def register(request):
                 return render(request, 'user/404.html')
     return render(request, 'user/home.html')
 
-
 def login(request):
     if request.POST:
         print("second login block")
@@ -138,10 +143,8 @@ def login(request):
             return redirect("/home")
     return render(request, 'user/home.html')
 
-
 def change_password(request):
     return render(request, 'user/change-password.html')
-
 
 def change_password_view(request):
     if request.method == "POST":
@@ -174,11 +177,9 @@ def change_password_view(request):
             messages.error(request, "Please Enter old password correctly !!")
             return render(request, 'user/change-password.html')
 
-
 def logout(request):
     request.session.clear()
     return redirect('/')
-
 
 # ========= PROPERTY ===========
 
@@ -228,6 +229,7 @@ def submit_property(request):
             other_features.append('Beach')
         if request.POST.get('a-12'):
             other_features.append('Parking')
+
         save_data = property.objects.create(property_title=property_title, property_status=property_status,
                                             property_type=property_type, property_price=property_price,
                                             property_sqft_area=property_area, property_bedrooms=property_no_of_bedrooms,
@@ -239,13 +241,31 @@ def submit_property(request):
                                             property_user_id=user_id, property_added_date=property_added_date,
                                             property_others=other_features, property_is_publish=property_is_publish)
         save_data.save()
+        
         # Code for uploading Multiple Image
         property_photos = request.FILES.getlist('property_photos')
         for img in property_photos:
             property_image.objects.create(property_image_url=img, property_id=save_data)
-        messages.error(request, "Property Save Successfully !!", extra_tags="success")
-    return render(request, 'user/submit-property.html')
+        
+        messages.success(request, "Property Save Successfully !!")
 
+        #send mail to subscriber
+        subscriber = subscribe.objects.all()
+        
+        for i in subscriber:
+            try:
+                send_mail(
+                    'New Property ',
+                    'New Property upload by Agents',
+                    settings.EMAIL_HOST_USER,
+                    [i.subscribe_email],
+                    fail_silently=False)
+            except SMTPException:
+                return HttpResponse('SMTP Error')
+            except:
+                return HttpResponse('Unknown Error')
+        return render(request, 'user/submit-property.html')
+    return render(request, 'user/submit-property.html')
 
 def single_property(request, p_id):
     property_details = property.objects.get(property_id=p_id)
@@ -274,7 +294,6 @@ def single_property(request, p_id):
 
     return render(request, 'user/single-property.html', data)
 
-
 def user_reviews(request, property_id):
     if request.method == 'POST':
         if request.session.get('user_session'):
@@ -290,7 +309,6 @@ def user_reviews(request, property_id):
             # return render(request, 'user/single-property.html', {"p_id": property_id})
     return redirect("/home")
 
-
 def property_type(request):
     if request.method == 'POST':
         city_selected = request.POST.get('property_city_option')
@@ -303,7 +321,6 @@ def property_type(request):
         print(f"selected city is ->>>>{city_selected}  and {property_type_selected}")
         print(f"selected property is ->>>>{pselected}")
     return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
-
 
 def property_type1(request, property_status):
     pselected = property.objects.filter(property_status=property_status)
@@ -361,7 +378,6 @@ def property_type_filter(request):
     return render(request, 'user/property_type.html', {"pselected": pselected, "photo": photo})
     # return render(request, '/user/property_type.html', {"pselected": pselected, "photo": photo})
 
-
 # ========= AGENT ===========
 
 def agent(request):
@@ -372,14 +388,12 @@ def agent(request):
     # agent = property.objects.raw('''SELECT p.property_id, p.property_user_id_id, count(p.property_id) as c, u.user_id, u.user_name, u.user_email, u.user_contact, u.user_image, u.user_city, u.user_state, u.user_facebook, u.user_instagram, u.user_linkedin, u.user_twitter FROM `userside_user_details` u, `userside_property` p where u.user_id = p.property_user_id_id group by p.property_user_id_id''')
     return render(request, 'user/agents.html', {"agent_data": agent})
 
-
 def agent_details(request, id):
     agent_detail = user_details.objects.get(user_id=id)
     property_details = property.objects.raw(
         'SELECT * FROM userside_property p , userside_property_rented_sold s where p.property_id<>s.property_rented_sold_property_id_id and p.property_is_publish=1;')
     photo = property_image.objects.all()
     return render(request, 'user/agent-page.html', {"agent": agent_detail,"property_details":property_details,"photo":photo})
-
 
 # ========== USER ===========
 class ClubChartView(TemplateView):
@@ -390,7 +404,6 @@ class ClubChartView(TemplateView):
         context["qs"] = property.objects.all()
         return context
         # return render(request, 'user/chart.html')
-
 
 def user_dashboard(request):
     user_session = request.session.get('user_session')
@@ -411,7 +424,6 @@ def user_dashboard(request):
         "user":user,
         "pbcount":pbcount
     })
-
 
 def user_profile(request):
     user_session = request.session.get('user_session')
@@ -472,7 +484,6 @@ def user_profile(request):
 
     return render(request, 'user/user_profile.html')
 
-
 def user_property(request):
     user_session = request.session.get('user_session')
     property_info = property.objects.filter(property_user_id=user_session)
@@ -486,11 +497,9 @@ def user_property(request):
     return render(request, 'user/user_property.html',
                   {"property_info": property_info, "property_sold": property_sold, "photo": photo,"user":user,"pbcount":pbcount})
 
-
 def edit_property(request, property_id):
     property1 = property.objects.get(property_id=property_id)
     return render(request, "user/edit_property.html", {"property1": property1})
-
 
 def edit_property_view(request):
     if request.method == "POST":
@@ -572,19 +581,16 @@ def edit_property_view(request):
             messages.error(request, "Please Enter old password correctly !!")
             return redirect("user-property")
 
-
 def view_property(request, property_id):
     property1 = property.objects.get(property_id=property_id)
     property_photo = property_image.objects.filter(property_id=property_id)
     return render(request, "user/view_property.html", {"property1": property1, "property_photo": property_photo})
-
 
 def delete_property(request, property_id):
     property1 = property.objects.get(property_id=property_id)
     property1.property_is_publish = False
     property1.save()
     return redirect("user-property")
-
 
 def user_bookmark_list(request):
     user_session = request.session.get('user_session')
@@ -629,7 +635,6 @@ def delete_bookmark(request, property_id):
 def about(request):
     return render(request, 'user/about.html')
 
-
 def contact(request):
     if request.method == "POST":
 
@@ -662,20 +667,16 @@ def contact(request):
     else:
         return render(request, 'user/contact.html')
 
-
 def faq(request):
     return render(request, 'user/faq.html')
-
 
 def privacy(request):
     return render(request, 'user/privacy.html')
 
-
 def not_found_404(request):
     return render(request, 'user/404.html')
 
-
-def subscribe(request):
+def subscription(request):
     if request.POST:
         semail = request.POST['semail']
         if subscribe.objects.filter(subscribe_email=semail).exists():
