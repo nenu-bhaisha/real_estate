@@ -58,5 +58,5 @@ urlpatterns = [
     path('faq', views.faq, name='faq'),
     path('privacy', views.privacy, name='privacy'),
     path('404', views.not_found_404, name='404'),
-    path('subscribe', views.subscribe, name='subscribe'),
+    path('subscription', views.subscription, name='subscription'),
 ]
