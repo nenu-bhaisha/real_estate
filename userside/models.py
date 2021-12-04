@@ -21,7 +21,7 @@ class user_details(models.Model):
     user_name = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_email = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_contact = models.IntegerField()  # int(10) NOT NULL
-    user_image = models.CharField(max_length=200)  # varchar(100) NOT NULL
+    user_image = models.ImageField(upload_to='User_Profile_Image',null=True)  # varchar(100) NOT NULL
     user_password = models.CharField(max_length=200)  # varchar(50) NOT NULL
     user_is_active = models.BooleanField(default=False)  # tinyint(1) NOT NULL
     user_title = models.CharField(max_length=200, null=True)
@@ -119,10 +119,8 @@ class user_review(models.Model):
 #Procedure for agent data
 
 class agent_data(models.Model):
-    p_count = models.IntegerField()
     user_id = models.CharField(max_length=10)           #0
-    user_name = models.CharField(max_length=200)
-    user_name = models.CharField(max_length=200) #1
+    user_name = models.CharField(max_length=200)        #1
     user_email = models.CharField(max_length=200)       #2
     user_contact = models.IntegerField()                #3
     user_image = models.CharField(max_length=200)       #4
@@ -132,3 +130,4 @@ class agent_data(models.Model):
     user_twitter = models.CharField(max_length=200)     #8
     user_instagram = models.CharField(max_length=200)   #9
     user_linkedin = models.CharField(max_length=200)    #10
+    p_count = models.IntegerField(null=True)            #11

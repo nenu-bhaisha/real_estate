@@ -3,16 +3,16 @@
     <div class="property_dashboard_navbar">
         
         <div class="dash_user_avater">
-            <img src="static/assets/img/user-3.jpg" class="img-fluid avater" alt="">
+            <img src="media/{{user.user_image|default_if_none:'#'}}" class="img-fluid avater" alt="">
             <h4>{{user.user_name}}</h4>
-            <span>{{user.user_city}} {{user.user_state}}</span>
+            <span>{{user.user_city}}, {{user.user_state}}</span>
         </div>
         
         <div class="dash_user_menues">
             <ul>
-                <li class="active"><a href="user_dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard<span class="notti_coun style-1">4</span></a></li>
+                <li class="active"><a href="user_dashboard"><i class="fa fa-tachometer-alt"></i>Dashboard</a></li>
                 <li><a href="user_profile"><i class="fa fa-user-tie"></i>My Profile</a></li>
-                <li><a href="user_bookmark_list"><i class="fa fa-bookmark"></i>Saved Property<span class="notti_coun style-2">7</span></a></li>
+                <li><a href="user_bookmark_list"><i class="fa fa-bookmark"></i>Saved Property<span class="notti_coun style-2">{{ pbcount }}</span></a></li>
                 <li><a href="user_property"><i class="fa fa-tasks"></i>My Properties</a></li>
                 <li><a href="#"><i class="fa fa-envelope"></i>Messages<span class="notti_coun style-3">3</span></a></li>
                 <li><a href="submit_property"><i class="fa fa-pen-nib"></i>Submit New Property</a></li>
@@ -20,12 +20,12 @@
             </ul>
         </div>
         
-        <div class="dash_user_footer">
+        {% comment %} <div class="dash_user_footer">
             <ul>
                 <li><a href="#"><i class="fa fa-power-off"></i></a></li>
                 <li><a href="#"><i class="fa fa-comment"></i></a></li>
                 <li><a href="#"><i class="fa fa-cog"></i></a></li>
             </ul>
-        </div>
+        </div> {% endcomment %}
     </div>
 </div>
