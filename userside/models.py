@@ -62,6 +62,7 @@ class property(models.Model):
     property_user_id = ForeignKey(user_details, on_delete=models.CASCADE)  # varchar(10) NOT NULL
     property_added_date = models.DateField()  # date NOT NULL DEFAULT current_timestamp()
     property_is_publish = models.BooleanField(null=True)  # tinyint(1) NOT NULL
+    property_is_sold = models.BooleanField(null=False, default=False)  # tinyint(1) NOT NULL
     #property_photos_id = ForeignKey(property_image, on_delete=models.CASCADE)  # varchar(10) NOT NULL
 
 
@@ -96,10 +97,10 @@ class property_image(models.Model):
 class property_rented_sold(models.Model):
     property_rented_sold_id = models.AutoField(primary_key=True)  # varchar(10) NOT NULL
     property_rented_sold_property_id = ForeignKey(property, on_delete=models.CASCADE)  # varchar(10) NOT NULL
-    property_rented_sold_user_id = ForeignKey(user_details, on_delete=models.CASCADE)  # varchar(10) NOT NULL
+    property_rented_sold_user_id = models.CharField(max_length=200) # varchar(10) NOT NULL
     property_rented_sold_date = models.DateField()  # date NOT NULL DEFAULT current_timestamp()
-    property_rented_sold_duration = models.IntegerField(
-        null=True)  # int(11) DEFAULT NULL COMMENT '(only for rent - in months )'
+    property_rented_sold_user_id = ForeignKey(user_details, on_delete=models.CASCADE)
+
 
 
 # subscribe

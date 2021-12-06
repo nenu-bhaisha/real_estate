@@ -26,7 +26,8 @@ def home(request):
             
     #------------Subscription maill-------------------
     if request.method == "POST":
-         mail_has = subscribe.objects.filter(subscribe_email=to_email).count()
+        to_email=request.POST.get('email')
+        mail_has = subscribe.objects.filter(subscribe_email=to_email).count()
         
         if mail_has==0 :
             subscribe.objects.create(subscribe_email=to_email)
@@ -255,8 +256,6 @@ def submit_property(request):
         for img in property_photos:
             property_image.objects.create(property_image_url=img, property_id=save_data)
         messages.success(request, "Property Save Successfully !!")
-
-    return render(request, 'user/submit-property.html')
 
         #send mail to subscriber
         subscriber = subscribe.objects.all()
